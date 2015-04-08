@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="TaxIndService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.tax.webservices.lof.kz" xmlns:main="http://tax.webservices.lof.kz">
+		<parameter name="className" value="kz.lof.webservices.tax.TaxIndService" />
+		<parameter name="wsdlTargetNamespace" value="http://tax.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getDataByFIO getDataByRNN getFullData testService" />
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.tax.store.Address" />
+		<beanMapping qname="store:Place" languageSpecificType="java:kz.lof.webservices.tax.store.Place" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.tax.store.Region" />
+		<beanMapping qname="store:State" languageSpecificType="java:kz.lof.webservices.tax.store.State" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.tax.store.Street" />
+		<beanMapping qname="store:TaxIndFullData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndFullData" />
+		<beanMapping qname="store:TaxIndSearchResult" languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndSearchResult" />
+		<beanMapping qname="store:TaxIndShortData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndShortData" />
+		<beanMapping qname="store:TaxOffice" languageSpecificType="java:kz.lof.webservices.tax.store.TaxOffice" />
+		<arrayMapping qname="store:TaxIndShortDataArray" type="java:kz.lof.webservices.tax.store.TaxIndShortData[]" innerType="store:TaxIndShortData" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+	</service>
+</deployment>

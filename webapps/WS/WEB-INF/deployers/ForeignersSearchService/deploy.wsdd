@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="ForeignersSearchService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.ump.webservices.lof.kz" xmlns:main="http://ump.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.ump.ForeignersSearchService" />
+		<parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getLog getFullData getPersonByDoc getPersonByFIO testService" />
+		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
+        	<parameter qname="main:date" type="xsd:date"/>
+      	</operation>
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.ump.store.Address" />
+		<beanMapping qname="store:City" languageSpecificType="java:kz.lof.webservices.ump.store.City" />
+		<beanMapping qname="store:Country" languageSpecificType="java:kz.lof.webservices.ump.store.Country" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.ump.store.District" />
+		<beanMapping qname="store:DocType" languageSpecificType="java:kz.lof.webservices.ump.store.DocType" />
+		<beanMapping qname="store:Document" languageSpecificType="java:kz.lof.webservices.ump.store.Document" />
+		<beanMapping qname="store:Nationality" languageSpecificType="java:kz.lof.webservices.ump.store.Nationality" />
+		<beanMapping qname="store:PersonFullData" languageSpecificType="java:kz.lof.webservices.ump.store.PersonFullData" />
+		<beanMapping qname="store:PersonSearchResult" languageSpecificType="java:kz.lof.webservices.ump.store.PersonSearchResult" />
+		<beanMapping qname="store:PersonShortData" languageSpecificType="java:kz.lof.webservices.ump.store.PersonShortData" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.ump.store.Region" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.ump.store.Street" />
+		<beanMapping qname="store:VisitData" languageSpecificType="java:kz.lof.webservices.ump.store.VisitData" />
+		<beanMapping qname="store:VisitPurpose" languageSpecificType="java:kz.lof.webservices.ump.store.VisitPurpose" />
+		<arrayMapping qname="store:VisitDataArray" type="java:kz.lof.webservices.ump.store.VisitData[]" innerType="store:VisitData" />
+		<arrayMapping qname="store:PersonShortDataArray" type="java:kz.lof.webservices.ump.store.PersonShortData[]" innerType="store:PersonShortData" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+	</service>
+</deployment>

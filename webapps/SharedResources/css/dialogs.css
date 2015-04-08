@@ -1,0 +1,144 @@
+/* интерфейс окна inputbox*/
+.closeButton{    
+    position: absolute;    
+    top: 0px;    
+    right: 0px; 
+    cursor: pointer;    
+    padding: 2px 4px 2px 4px;    
+}
+
+.blockWindow{
+	display:block; 
+	position:absolute;
+	z-index:3;	
+	background-Color = #FFFFFF;
+	filter="progid:DXImageTransform.Microsoft.Alpha(Opacity=40, Style=0)";
+	top:0;
+	left:0;
+}
+
+.inputboxfield{
+	border: 1px solid #CCC;	
+	
+}
+
+.headerInputBox{
+	border-bottom:1px solid gray;
+	width:437px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#dde0ec; 
+}
+
+.inputbox{    
+    width:400px;
+    height:200px;
+    position: absolute;    
+    border: 1px solid gray;
+    background: white;    
+    padding: 20px 20px 20px 20px;    
+    text-align: center;
+    display:none;
+    z-index:4;   
+}
+.picklist{    
+    width:500px;
+    height:500px;
+    position: absolute;    
+    border: 1px solid #a6c9e2;
+    background: white;    
+    padding: 20px 20px 20px 20px;    
+    text-align: center;
+    display:block;
+    z-index:4;   
+}
+.coordBlockForm{    
+    width:300px;
+    height:300px;
+    position: absolute;    
+    border: 1px solid gray;
+    background: white;    
+    padding: 20px 20px 20px 20px;    
+    text-align: center;
+    display:none;
+    z-index:4;   
+}
+.box{
+	width:400px;
+    height:80px;
+    position: absolute;    
+    border: 1px solid gray;
+    background: white;    
+    padding: 20px 20px 20px 20px;    
+    text-align: center;
+    display:none;
+    z-index:4;
+}
+.headerBox{
+	border-bottom:1px solid gray;
+	width:440px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#dde0ec; 
+}
+
+
+.header{
+	border-bottom:1px solid gray;
+	width:498px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#5c9ccc ; 
+
+}
+.headerCoordBlockForm{
+	border-bottom:1px solid gray;
+	width:340px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#dde0ec; 
+}
+.headersignform{
+	border-bottom:1px solid gray;
+	width:442px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#dde0ec; 
+}
+.headerNotification{
+	border-bottom:1px solid gray;
+	width:250px;
+	height:21px;
+	position:absolute;
+	top:0;
+	left:0;
+	cursor: move;
+	background-color:#dde0ec; 
+}
+
+.notification{    
+    width:250px;
+    height:150px;
+    position: absolute;    
+    border: 1px solid gray;
+    background: white;    
+    padding: 20px 20px 20px 20px;    
+    text-align: center;
+    display:none;
+    z-index:4;  
+}     

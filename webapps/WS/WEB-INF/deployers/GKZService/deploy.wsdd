@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="GKZService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.gkz.webservices.lof.kz" xmlns:main="http://gkz.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<requestFlow> 
+       		<handler type="soapmonitor"/> 
+     	</requestFlow> 
+    	<responseFlow> 
+       		<handler type="soapmonitor"/> 
+     	</responseFlow>
+		<parameter name="className" value="kz.lof.webservices.gkz.GKZService" />
+		<parameter name="wsdlTargetNamespace" value="http://gkz.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getDataByCadastrNumber getDataByCompany getDataByDocument
+			getDataByFIO getDataQuarter getDataShort getLandFullData getRegion getStreet" />
+			
+		<beanMapping qname="store:CompanyShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.CompanyShortData" />
+		<beanMapping qname="store:CompanyShortDataResult" languageSpecificType="java:kz.lof.webservices.gkz.store.CompanyShortDataResult" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.gkz.store.District" />
+		<beanMapping qname="store:HumanShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.HumanShortData" />
+		<beanMapping qname="store:HumanShortDataResult" languageSpecificType="java:kz.lof.webservices.gkz.store.HumanShortDataResult" />
+		<beanMapping qname="store:LandFullData" languageSpecificType="java:kz.lof.webservices.gkz.store.LandFullData" />
+		<beanMapping qname="store:LandShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.LandShortData" />
+		<beanMapping qname="store:LandShortDataResult" languageSpecificType="java:kz.lof.webservices.gkz.store.LandShortDataResult" />
+		<beanMapping qname="store:OwnerType" languageSpecificType="java:kz.lof.webservices.gkz.store.OwnerType" />
+		<beanMapping qname="store:Quarter" languageSpecificType="java:kz.lof.webservices.gkz.store.Quarter" />
+		<beanMapping qname="store:QuarterSearchResult" languageSpecificType="java:kz.lof.webservices.gkz.store.QuarterSearchResult" />
+		<beanMapping qname="store:RegionSearchResult" languageSpecificType="java:kz.lof.webservices.gkz.store.RegionSearchResult" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.gkz.store.Street" />
+		<beanMapping qname="store:StreetSearchResult" languageSpecificType="java:kz.lof.webservices.gkz.store.StreetSearchResult" />
+		
+		<arrayMapping qname="store:StreetArray" type="java:kz.lof.webservices.gkz.store.Street[]" innerType="store:Street" />
+		<arrayMapping qname="store:QuarterArray" type="java:kz.lof.webservices.gkz.store.Quarter[]" innerType="store:Quarter" />
+		<arrayMapping qname="store:DistrictArray" type="java:kz.lof.webservices.gkz.store.District[]" innerType="store:District" />
+		<arrayMapping qname="store:LandShortDataArray" type="java:kz.lof.webservices.gkz.store.LandShortData[]" innerType="store:LandShortData" />
+		<arrayMapping qname="store:HumanShortDataArray" type="java:kz.lof.webservices.gkz.store.HumanShortData[]" innerType="store:HumanShortData" />
+		<arrayMapping qname="store:CompanyShortDataArray" type="java:kz.lof.webservices.gkz.store.CompanyShortData[]" innerType="store:CompanyShortData" />
+	</service>
+</deployment>

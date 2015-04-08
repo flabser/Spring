@@ -1,0 +1,104 @@
+TABLE{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 0.9em;
+	border-collapse: collapse;
+}
+
+.outlineentry{	
+	height:25px;
+}
+.viewFirstLevel{	
+	margin-top:10; 	
+	font-size: 0.95em;
+}
+.view{	
+	margin-top:4; 	
+	font-size: 0.95em;
+}
+.view2Level{	
+	margin-top:5; 	
+	font-size: 0.95em;
+	margin-left:2.5em;
+}
+.view3Level{	
+	margin-top:5; 	
+	font-size: 0.95em;
+	margin-left:3.5em;
+}
+.grouptable{	
+	border-top: 1px solid gray;
+	
+	margin-left:2.5em;
+	}
+	
+.viewframe{
+	width:78%; 
+	margin-left:3%; 
+	padding-left:1%; 
+	border-left:2px solid; 
+	height:745px; 
+	border-color:#6790b3; 
+	position:absolute;
+} 
+
+.count{
+	font-weight: bold;		
+}
+
+/* для содержимого viewframe*/
+
+.viewtitle{
+	width:100%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.3em;	
+}
+
+.time{	
+	 font-family: Verdana, Arial, Helvetica, sans-serif;
+	 margin-left:5%;		
+	 font-size:0.6em;
+	 color: gray;	
+	 text-align:left; 
+	 position:absolute;	
+	 width:250px;
+}
+
+.th{	
+	text-align:center; 
+	font-weight: bold;	
+	background-color:#dde0ec;	
+	
+}
+
+.thcell{
+	height:30px;	
+	border-bottom: 1px solid gray;
+	 border-collapse: collapse;
+}
+
+.num{
+	background-color:white;
+	width:5%;
+	height:25;
+	text-align:center; 
+	font-color: #CCCCCC;
+	border-right: 1px solid gray;
+}
+
+.vn{
+	font-size:14px;
+	width:10%;
+	text-align:left; 
+}
+
+.dvn{
+	font-size:14px;
+	width:30%;
+	text-align:center; 
+}
+.outlineDiv
+A{
+width: 85%;
+
+}	
+

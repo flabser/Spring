@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="QuestService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.ump.webservices.lof.kz" xmlns:main="http://ump.webservices.lof.kz">
+		<parameter name="className" value="kz.lof.webservices.ump.QuestService" />
+		<parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="searchPeople testService" />
+		<beanMapping qname="store:QuestData" languageSpecificType="java:kz.lof.webservices.ump.store.QuestData" />
+		<beanMapping qname="store:WantedData" languageSpecificType="java:kz.lof.webservices.ump.store.WantedData" />
+		<beanMapping qname="store:WantedResult" languageSpecificType="java:kz.lof.webservices.ump.store.WantedResult" />
+		<arrayMapping qname="store:QuestDataArray" type="java:kz.lof.webservices.ump.store.QuestData[]" innerType="store:QuestData" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+	</service>
+</deployment>

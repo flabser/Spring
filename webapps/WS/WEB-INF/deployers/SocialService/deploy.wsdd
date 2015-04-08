@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="SocialService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.social.webservices.lof.kz" xmlns:main="http://social.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.social.SocialService" />
+		<parameter name="wsdlTargetNamespace" value="http://social.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getHumanByDistrict getHumanByAddress getHumanByFullName getHumanById getStreets getDistricts" />
+
+		<!--<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">-->
+        	<!--<parameter qname="main:date" type="xsd:date"/>-->
+      	<!--</operation>-->
+      	
+      	<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.social.store.Address" />
+        <beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.social.store.District" />
+        <beanMapping qname="store:HumanFullData" languageSpecificType="java:kz.lof.webservices.social.store.HumanFullData" />
+        <beanMapping qname="store:HumanSearchResult" languageSpecificType="java:kz.lof.webservices.social.store.HumanSearchResult" />
+        <beanMapping qname="store:HumanShortData" languageSpecificType="java:kz.lof.webservices.social.store.HumanShortData" />
+        <beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.social.store.Street" />
+        <arrayMapping qname="store:StreetArray" type="java:kz.lof.webservices.social.store.Street[]" innerType="store:Street" />
+		<arrayMapping qname="store:DistrictArray" type="java:kz.lof.webservices.social.store.District[]" innerType="store:District" />
+        <arrayMapping qname="store:AddressArray" type="java:kz.lof.webservices.social.store.Address[]" innerType="store:Address" />
+        <arrayMapping qname="store:HumanShortDataArray" type="java:kz.lof.webservices.social.store.HumanShortData[]" innerType="store:HumanShortData" />
+	</service>
+</deployment>

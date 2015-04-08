@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="TaxPayService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.tax.webservices.lof.kz" xmlns:main="http://tax.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.tax.TaxPayService" />
+		<parameter name="wsdlTargetNamespace" value="http://tax.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getDataByOrgNameGis getLog getDataByFIO getDataByIIN getDataByOrgName getDataByRNN getFullData getOrgsByAddresses testService" />
+		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
+        	<parameter qname="main:date" type="xsd:date"/>
+      	</operation>
+		<operation name="getOrgsByAddresses" qname="main:getOrgsByAddresses" returnQName="main:getOrgsByAddressesReturn" returnType="store:TaxPayersSearchResult">
+        	<parameter qname="main:addresses" type="store:Address"/>
+        	<parameter qname="main:fromDate" type="xsd:date"/>
+        	<parameter qname="main:toDate" type="xsd:date"/>
+        	<parameter qname="main:pageNum" type="xsd:int"/>
+        	<parameter qname="main:resultsOnPage" type="xsd:int"/>
+        	<parameter qname="main:lang" type="xsd:string"/>
+      	</operation>
+		<beanMapping qname="store:ActivityType" languageSpecificType="java:kz.lof.webservices.tax.store.ActivityType" />
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.tax.store.Address" />
+		<beanMapping qname="store:LegalPersonType" languageSpecificType="java:kz.lof.webservices.tax.store.LegalPersonType" />
+		<beanMapping qname="store:OrgForm" languageSpecificType="java:kz.lof.webservices.tax.store.OrgForm" />
+		<beanMapping qname="store:Place" languageSpecificType="java:kz.lof.webservices.tax.store.Place" />
+		<beanMapping qname="store:PropertyForm" languageSpecificType="java:kz.lof.webservices.tax.store.PropertyForm" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.tax.store.Region" />
+		<beanMapping qname="store:State" languageSpecificType="java:kz.lof.webservices.tax.store.State" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.tax.store.Street" />
+		<beanMapping qname="store:TaxPayerFullData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerFullData" />
+		<beanMapping qname="store:TaxPayerShortData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerShortData" />
+		<beanMapping qname="store:TaxPayersSearchResult" languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayersSearchResult" />
+		<arrayMapping qname="store:TaxPayerShortDataArray" type="java:kz.lof.webservices.tax.store.TaxPayerShortData[]" innerType="store:TaxPayerShortData" />
+		<arrayMapping qname="store:TaxPayerFullDataArray" type="java:kz.lof.webservices.tax.store.TaxPayerFullData[]" innerType="store:TaxPayerFullData" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+	</service>
+</deployment>

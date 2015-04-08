@@ -1,0 +1,5 @@
+package kz.lof.exception;
+
+public enum ExceptionType {
+	DOCUMENT_WRITE_ACCESS_RESTRICTED, DOCUMENT_READ_RESTRICTED, DOCUMENT_DELETE_RESTRICTED;	
+}

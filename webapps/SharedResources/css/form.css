@@ -1,0 +1,86 @@
+.noselect select{	
+	visibility:hidden;
+}
+.formtitle{	
+	font-size:20;
+	margin-top:2;
+}
+/*userprofile*/
+.title{
+   font-size:15pt;
+   font-family:verdana;
+}
+/*filed caption*/
+.fc{
+	vertical-align:top;
+	text-align:right;	
+}
+/*userprofile*/
+.tt{
+	font-size:10.8pt;
+	font-family:verdana; 
+    vertical-align:top;
+	text-align:right;	
+}
+
+.rr{
+	 vertical-align:top;
+	text-align:left;
+}	
+/*section title*/
+.st{
+	height:20px;	
+	border-bottom: 1px solid gray;	
+	font-weight: bold;	
+	background-color:#dde0ec;
+}
+/* help */
+.hl{
+    margin-left:90%;
+    margin-top:-2.6%; 
+    position:absolute;
+    z-index:2;
+}
+    /*border*/
+.ur{
+   color:"#CCCCCC";
+   text-align:left;
+   width:80%; 
+}   
+	/*read only field*/
+.rof{
+	border: 1px solid #CCC;	
+	vertical-align:top;
+}
+
+/*field as table (for multivalue)*/
+.tablefield{
+	border-collapse: collapse;
+	border: 1px solid #CCC;	
+}
+
+/*table cell of form field*/
+.fieldtd{
+	vertical-align:top;
+	padding-top:5;
+}
+
+/*picklist button*/
+.plistbtn{
+	margin-right:5;
+	margin-top:5;	
+}
+
+/* workspace*/
+.center{
+    width:500px; 
+    height:450px; 
+    margin-left:400px;
+    margin-top:150px; 
+    align:center;
+    overflow:auto;
+}
+.sh{
+	font-family:verdana;
+	font-size:10pt;
+}	 

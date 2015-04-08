@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="BTIService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.bti.webservices.lof.kz" xmlns:main="http://bti.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.bti.BTIService" />
+		<parameter name="wsdlTargetNamespace" value="http://bti.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getLog getBuildingKinds getDataByAddress getDataByBuildingId getDataByDoc getDataByFIO getDataByIIN getDataByOrgName getDataByOwnerId getDocKinds getDocTypes getFullDataByDoc getStreets getAllStreets testService getHouses" />
+		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
+        	<parameter qname="main:date" type="xsd:date"/>
+      	</operation>
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.bti.store.Address" />
+		<beanMapping qname="store:ApartmentData" languageSpecificType="java:kz.lof.webservices.bti.store.ApartmentData" />
+		<beanMapping qname="store:BuildingFullData" languageSpecificType="java:kz.lof.webservices.bti.store.BuildingFullData" />
+		<beanMapping qname="store:BuildingKind" languageSpecificType="java:kz.lof.webservices.bti.store.BuildingKind" />
+		<beanMapping qname="store:BuildingPurpose" languageSpecificType="java:kz.lof.webservices.bti.store.BuildingPurpose" />
+		<beanMapping qname="store:City" languageSpecificType="java:kz.lof.webservices.bti.store.City" />
+		<beanMapping qname="store:Country" languageSpecificType="java:kz.lof.webservices.bti.store.Country" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.bti.store.District" />
+		<beanMapping qname="store:DocKind" languageSpecificType="java:kz.lof.webservices.bti.store.DocKind" />
+		<beanMapping qname="store:DocType" languageSpecificType="java:kz.lof.webservices.bti.store.DocType" />
+		<beanMapping qname="store:DocumentData" languageSpecificType="java:kz.lof.webservices.bti.store.DocumentData" />
+		<beanMapping qname="store:HousePart" languageSpecificType="java:kz.lof.webservices.bti.store.HousePart" />
+		<beanMapping qname="store:IDDocType" languageSpecificType="java:kz.lof.webservices.bti.store.IDDocType" />
+		<beanMapping qname="store:IDDocument" languageSpecificType="java:kz.lof.webservices.bti.store.IDDocument" />
+		<beanMapping qname="store:PersonSearchResult" languageSpecificType="java:kz.lof.webservices.bti.store.PersonSearchResult" />
+		<beanMapping qname="store:PersonShortData" languageSpecificType="java:kz.lof.webservices.bti.store.PersonShortData" />
+		<beanMapping qname="store:PropertyForm" languageSpecificType="java:kz.lof.webservices.bti.store.PropertyForm" />
+		<beanMapping qname="store:PropertyKind" languageSpecificType="java:kz.lof.webservices.bti.store.PropertyKind" />
+		<beanMapping qname="store:RealtyFullData" languageSpecificType="java:kz.lof.webservices.bti.store.RealtyFullData" />
+		<beanMapping qname="store:RealtySearchResult" languageSpecificType="java:kz.lof.webservices.bti.store.RealtySearchResult" />
+		<beanMapping qname="store:RealtyShortData" languageSpecificType="java:kz.lof.webservices.bti.store.RealtyShortData" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.bti.store.Region" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.bti.store.Street" />
+		<beanMapping qname="store:StreetType" languageSpecificType="java:kz.lof.webservices.bti.store.StreetType" />
+		<beanMapping qname="store:WallMaterial" languageSpecificType="java:kz.lof.webservices.bti.store.WallMaterial" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="store:PersonShortDataArray" type="java:kz.lof.webservices.bti.store.PersonShortData[]" innerType="store:PersonShortData" />
+		<arrayMapping qname="store:RealtyShortDataArray" type="java:kz.lof.webservices.bti.store.RealtyShortData[]" innerType="store:RealtyShortData" />
+		<arrayMapping qname="store:ApartmentDataArray" type="java:kz.lof.webservices.bti.store.ApartmentData[]" innerType="store:ApartmentData" />
+	</service>
+</deployment>

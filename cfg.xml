@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<spring>
+	<name>Nopanic</name>
+	<adminapp mode="ON" />
+	<hostname></hostname>
+	<port></port>
+	<no-ws-auth>true</no-ws-auth>
+	<ssl mode="OFF">
+		<port></port>
+		<keypass></keypass>
+		<keystore></keystore>
+		<clientauth mode="OFF">
+			<truststorepass></truststorepass>
+			<truststorefile></truststorefile>
+		</clientauth>
+	</ssl>
+
+    <organization mode="ON">
+        <orgtype>SOCIAL</orgtype>
+        <name>SOCIAL</name>
+        <driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://localhost:5432/Social</url>
+        <username>postgres</username>
+        <password>smartdoc</password>
+        <conversion>
+            <driver></driver>
+            <url></url>
+            <username></username>
+            <password></password>
+            <filepath></filepath>
+        </conversion>
+        <load>
+            <handlerclass>kz.lof.spring.loaders.social.Social</handlerclass>
+            <filepath>D:\workspaces\IntelliJ\Spring\social</filepath>
+            <scheduler mode="ON">
+                <startdelaymin>0</startdelaymin>
+                <starttime>01:00</starttime>
+                <nextstart></nextstart>
+            </scheduler>
+        </load>
+    </organization>
+	
+	<organization mode="OFF">
+		<orgtype>GKZ</orgtype>
+		<name>GKZ</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://localhost:5432/GKZ</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver></driver>
+			<url></url>
+			<username></username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass></handlerclass>
+			<filepath></filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>01:00</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<organization mode="OFF">
+		<name>NK</name>
+		<orgtype>NK</orgtype>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://192.168.0.13:5433/NK</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:jtds:sybase://192.168.0.8:5000/NK</url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass>kz.lof.spring.loaders.nk.Nk</handlerclass>
+			<filepath>D:\workspaces\eclipse\Spring\datafiles</filepath>
+			<scheduler mode="ON">
+				<startdelaymin>0</startdelaymin>
+				<starttime>21:00</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+
+	</organization>
+
+
+	<organization mode="OFF">
+		<orgtype>INDIVIDUAL</orgtype>
+		<name>INDIVIDUAL</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://127.0.0.1:5432/NK</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:jtds:sybase://192.168.0.8:5000/INDIVIDUAL</url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass></handlerclass>
+			<filepath></filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>20:59</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<organization mode="OFF">
+		<orgtype>UMP</orgtype>
+		<name>UMP</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://192.168.0.13:5433/UMP</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<!-- <driver>com.sybase.jdbc3.jdbc.SybDriver</driver>
+			<url>jdbc:sybase:Tds:192.168.5.100:5000/UMP</url>
+			<username>sa</username>
+			<password></password> -->
+			<!-- <driver>com.sybase.jdbc3.jdbc.SybDriver</driver>
+			<url>jdbc:sybase:Tds:192.168.181.3:7100/PASPORT1_DSS</url>
+			<username>eis</username>
+			<password>gorodok</password> -->
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:sybase:Tds:192.168.181.3:7100/PASPORT1_DSS</url>
+			<username>eis</username>
+			<password>gorodok</password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass>kz.lof.spring.loaders.ump.Ump</handlerclass>
+			<filepath>D:/load/ump</filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>01:00</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<organization mode="ON">
+		<orgtype>UDP</orgtype>
+		<name>UDP</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://192.168.0.13:5433/UDP</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver></driver>
+			<url></url>
+			<username></username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass>kz.lof.spring.loaders.udp.Udp</handlerclass>
+			<filepath>D:\workspaces\eclipse\Spring\datafiles\samba</filepath>
+			<scheduler mode="ON">
+				<startdelaymin>0</startdelaymin>
+				<starttime>01:00</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<organization mode="OFF">
+		<orgtype>BTI</orgtype>
+		<name>BTI</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://127.0.0.1:5432/BTI</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:jtds:sybase://192.168.0.8:5000/BTI</url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass>kz.lof.spring.loaders.bti.Bti</handlerclass>
+			<filepath>D:\apps\jeews\Spring\datafiles\100503</filepath>
+			<scheduler mode="ON">
+				<startdelaymin>0</startdelaymin>
+				<starttime>23:00</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+	
+	<organization mode="OFF">
+		<orgtype>UAIG</orgtype>
+		<name>UAIG</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://localhost:5432/UAIG</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:jtds:sybase://192.168.0.8:5000/DAIG</url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass></handlerclass>
+			<filepath>D:\apps\jeews\Spring\datafiles</filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>15:11</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+	
+	<organization mode="OFF">
+		<orgtype>UKI</orgtype>
+		<name>UKI</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://localhost:5432/UKI</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver></driver>
+			<url></url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass></handlerclass>
+			<filepath>D:\apps\jeews\Spring\datafiles\samba\uki</filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>15:11</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<organization mode="OFF">
+		<orgtype>FRNS</orgtype>
+		<name>FRNS</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://127.0.0.1:5432/FOREIGNERS</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+		<conversion>
+			<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+			<url>jdbc:jtds:sybase://192.168.0.8:5000/INOGOR</url>
+			<username>sa</username>
+			<password></password>
+			<filepath></filepath>
+		</conversion>
+		<load>
+			<handlerclass></handlerclass>
+			<filepath>D:/load/ump</filepath>
+			<scheduler mode="OFF">
+				<startdelaymin>0</startdelaymin>
+				<starttime>15:11</starttime>
+				<nextstart></nextstart>
+			</scheduler>
+		</load>
+	</organization>
+
+	<logging>
+		<verbose>true</verbose>
+	</logging>
+
+	<scheduler>
+		<startdelaymin>0</startdelaymin>
+	</scheduler>
+
+	<debug>true</debug>
+</spring>

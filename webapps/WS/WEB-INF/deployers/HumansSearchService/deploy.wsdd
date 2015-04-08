@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="HumansSearchService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.ump.webservices.lof.kz" xmlns:main="http://ump.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<requestFlow> 
+       		<handler type="soapmonitor"/> 
+     	</requestFlow> 
+    	<responseFlow> 
+       		<handler type="soapmonitor"/> 
+     	</responseFlow>
+		<parameter name="className" value="kz.lof.webservices.ump.HumansSearchService" />
+		<parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getProzhivByCodeRegion getCountCriminalsByAdr getCountCriminalsByCodeRegion getLog getAllCountries getAllDistricts getAllStreets getCitizenByIIN getCountry getDistricts getFullData getHumanByAddr getHumanByDoc getHumanByFIO getStreets 
+		getNationalityByAddr getProzhivByAddr getCntAdamByAge getInfoMigrationByAdr getInfoMigrationByCodeRegion getInfoMigrationNationByAdr getInfoMigrationNationByCodeRegion getInfoMigrationReasonByAdr  getInfoMigrationReasonByCodeRegion getFlats
+		getMigrationSpecByAdr getMigrationSpecByCodeRegion getMigrationNatSpecByAdr getMigrationNatSpecByCodeRegion getMigrationNatEducByAdr getMigrationNatEducByCodeRegion getCountTypeRegByAdr getCountTypeRegByCodeRegion getHouses getInfoMigrationLiveByCodeRegion testService" />
+		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
+        	<parameter qname="main:date" type="xsd:date"/>
+      	</operation>
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.ump.store.Address" />
+		<beanMapping qname="store:Apartment" languageSpecificType="java:kz.lof.webservices.ump.store.Apartment" />
+		<beanMapping qname="store:ApartmentType" languageSpecificType="java:kz.lof.webservices.ump.store.ApartmentType" />
+		<beanMapping qname="store:Education" languageSpecificType="java:kz.lof.webservices.ump.store.Education" />
+		<beanMapping qname="store:City" languageSpecificType="java:kz.lof.webservices.ump.store.City" />
+		<beanMapping qname="store:Country" languageSpecificType="java:kz.lof.webservices.ump.store.Country" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.ump.store.District" />
+		<beanMapping qname="store:DocType" languageSpecificType="java:kz.lof.webservices.ump.store.DocType" />
+		<beanMapping qname="store:Document" languageSpecificType="java:kz.lof.webservices.ump.store.Document" />
+		<beanMapping qname="store:HumanFullData" languageSpecificType="java:kz.lof.webservices.ump.store.HumanFullData" />
+		<beanMapping qname="store:HumanShortData" languageSpecificType="java:kz.lof.webservices.ump.store.HumanShortData" />
+		<beanMapping qname="store:HumansSearchResult" languageSpecificType="java:kz.lof.webservices.ump.store.HumansSearchResult" />
+		<beanMapping qname="store:Nationality" languageSpecificType="java:kz.lof.webservices.ump.store.Nationality" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.ump.store.Region" />
+		<beanMapping qname="store:RegType" languageSpecificType="java:kz.lof.webservices.ump.store.RegType" />
+		<beanMapping qname="store:Relation" languageSpecificType="java:kz.lof.webservices.ump.store.Relation" />
+		<beanMapping qname="store:Street" languageSpecificType="java:kz.lof.webservices.ump.store.Street" />
+		<beanMapping qname="store:VisitPurpose" languageSpecificType="java:kz.lof.webservices.ump.store.VisitPurpose" />
+		<beanMapping qname="store:VisitReason" languageSpecificType="java:kz.lof.webservices.ump.store.VisitReason" />
+		<beanMapping qname="store:MigrationData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationData" />
+		<beanMapping qname="store:NatCount" languageSpecificType="java:kz.lof.webservices.ump.store.NatCount" />
+		<beanMapping qname="store:CountByAge" languageSpecificType="java:kz.lof.webservices.ump.store.CountByAge" />
+		<beanMapping qname="store:NatEducData" languageSpecificType="java:kz.lof.webservices.ump.store.NatEducData" />
+		<beanMapping qname="store:ReasonData" languageSpecificType="java:kz.lof.webservices.ump.store.ReasonData" />
+		<beanMapping qname="store:SpecCount" languageSpecificType="java:kz.lof.webservices.ump.store.SpecCount" />
+		<beanMapping qname="store:TypeRegData" languageSpecificType="java:kz.lof.webservices.ump.store.TypeRegData" />
+		<beanMapping qname="store:CriminalsData" languageSpecificType="java:kz.lof.webservices.ump.store.CriminalsData" />
+		<beanMapping qname="store:CountMigByApartment" languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByApartment" />
+		<beanMapping qname="store:MigrationLiveData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationLiveData" />
+		<beanMapping qname="store:CountMigByNat" languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByNat" />
+		<beanMapping qname="store:MigrationNatData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationNatData" />
+		<beanMapping qname="store:CountByAddr" languageSpecificType="java:kz.lof.webservices.ump.store.CountByAddr" />
+		<beanMapping qname="store:CountByReason" languageSpecificType="java:kz.lof.webservices.ump.store.CountByReason" />
+		<beanMapping qname="store:MigrationReasonData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationReasonData" />
+		<beanMapping qname="store:RegTypeCount" languageSpecificType="java:kz.lof.webservices.ump.store.RegTypeCount" />
+		<arrayMapping qname="store:RegTypeCountArray" type="java:kz.lof.webservices.ump.store.RegTypeCount[]" innerType="store:RegTypeCount" />
+		<arrayMapping qname="store:CountByReasonArray" type="java:kz.lof.webservices.ump.store.CountByReason[]" innerType="store:CountByReason" />
+		<arrayMapping qname="store:MigrationReasonDataArray" type="java:kz.lof.webservices.ump.store.MigrationReasonData[]" innerType="store:MigrationReasonData" />
+		<arrayMapping qname="store:CountByAddrArray" type="java:kz.lof.webservices.ump.store.CountByAddr[]" innerType="store:CountByAddr" />
+		<arrayMapping qname="store:CountMigByApartmentArray" type="java:kz.lof.webservices.ump.store.CountMigByApartment[]" innerType="store:CountMigByApartment" />
+		<arrayMapping qname="store:MigrationLiveDataArray" type="java:kz.lof.webservices.ump.store.MigrationLiveData[]" innerType="store:MigrationLiveData" />
+		<arrayMapping qname="store:CountMigByNatArray" type="java:kz.lof.webservices.ump.store.CountMigByNat[]" innerType="store:CountMigByNat" />
+		<arrayMapping qname="store:MigrationNatDataArray" type="java:kz.lof.webservices.ump.store.MigrationNatData[]" innerType="store:MigrationNatData" />
+		<arrayMapping qname="store:CriminalsDataArray" type="java:kz.lof.webservices.ump.store.CriminalsData[]" innerType="store:CriminalsData" />
+		<arrayMapping qname="store:EducationArray" type="java:kz.lof.webservices.ump.store.Education[]" innerType="store:Education" />
+		<arrayMapping qname="store:CountByAgeArray" type="java:kz.lof.webservices.ump.store.CountByAge[]" innerType="store:CountByAge" />
+		<arrayMapping qname="store:VisitReasonArray" type="java:kz.lof.webservices.ump.store.VisitReason[]" innerType="store:VisitReason" />
+		<arrayMapping qname="store:MigrationDataArray" type="java:kz.lof.webservices.ump.store.MigrationData[]" innerType="store:MigrationData" />
+		<arrayMapping qname="store:NatCountArray" type="java:kz.lof.webservices.ump.store.NatCount[]" innerType="store:NatCount" />
+		<arrayMapping qname="store:NatEducDataArray" type="java:kz.lof.webservices.ump.store.NatEducData[]" innerType="store:NatEducData" />
+		<arrayMapping qname="store:ReasonDataArray" type="java:kz.lof.webservices.ump.store.ReasonData[]" innerType="store:ReasonData" />
+		<arrayMapping qname="store:SpecCountArray" type="java:kz.lof.webservices.ump.store.SpecCount[]" innerType="store:SpecCount" />
+		<arrayMapping qname="store:TypeRegDataArray" type="java:kz.lof.webservices.ump.store.TypeRegData[]" innerType="store:TypeRegData" />
+		<arrayMapping qname="store:HumanShortDataArray" type="java:kz.lof.webservices.ump.store.HumanShortData[]" innerType="store:HumanShortData" />
+		<arrayMapping qname="store:DocumentArray" type="java:kz.lof.webservices.ump.store.Document[]" innerType="store:Document" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="store:AddressArray" type="java:kz.lof.webservices.ump.store.Address[]" innerType="store:Address" />
+		
+      	
+	</service>
+</deployment>

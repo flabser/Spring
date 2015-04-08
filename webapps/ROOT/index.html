@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head >
+		<link rel="stylesheet" href="css/main.css" />
+		<meta http-equiv="Content-Type"	content="text/html; charset=windows-1251">
+		<title>Администратор</title>
+		<script>
+			function key(event){
+				if(event.keyCode==13){
+					submitForm()
+			    }
+			}
+			function submitForm(){
+				document.form.submit();
+			}
+		</script>
+	</head>
+	<body onkeypress="key(event)" style="background:#F1F8FF">
+		<br /><br />
+		<form action="Login" method="post" id="frm" name="form">
+			<br /><br /><br /><br /><br /><br /><br />
+			<table width="100%" border="0">
+				<tr>
+					<td width="42%" align="right" style="font-size:9pt;">
+						
+						<img src="img/Logo_Spring.png" style="border:none;"> 
+						<br /><br />
+						<font style="font-size: 2.0em;">Администратор</font>						
+						<br /><font style="color:gray">version 1.0 Copyright&#xA0;&#169;&#xA0;Lab of the Future 2012</font><br />
+						<br /><br />
+						
+							
+					</td>
+					<td width="1%"></td>
+					<td style="height: 400px" bgcolor="#0088CC" width="1"></td>
+					<td align="center">
+						<table width="300px" border="0" style="margin-top: 30px">
+							<tr>
+								<td style="float:right; padding:5px"><font class="sh"  style="color:gray">Логин : </font><input type="text" size="30" name="login" value="admin" style="padding:5px"/></td>
+							</tr>
+							<tr>
+								<td style="float:right; padding:5px"><font class="sh" style="color:gray">Пароль : </font><input type="password" size="30" name="pwd" value="" style="padding:5px"/></td>
+							</tr>
+							<tr>
+								<td class="action" align="left" style="padding:5px; margin">
+									<a href="javascript:submitForm()" style="margin-left:78px;">
+										<img src="img/key.gif"></img><font class="button" style="font-weight:bold;color:#0088CC">Войти</font>
+									</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

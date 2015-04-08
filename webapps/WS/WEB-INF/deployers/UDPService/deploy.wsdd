@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="UDPService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.udp.webservices.lof.kz" xmlns:main="http://udp.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.udp.UDPService" />
+		<parameter name="wsdlTargetNamespace" value="http://udp.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getLog getDataByFIO getDataByGRNZ getDataByIIN getDataByOrgName 
+		getDataByOwnerId getDataByRegId getDataBySRTS getTheftData getCountAMTSByAdr getCountAMTSByCodeRegion 
+		getMarkAMTSByCodeRegion getMarkAMTSByAdr getInfoYearAMTSByCodeRegion getInfoYearAMTSByAdr 
+		getInfoDrivLicByCodeRegion getInfoDrivLicByAdr getInfoOwnerTSByAdr getInfoOwnerTSByCodeRegion 
+		getCountOwnerTSByAdr getCountOwnerTSByCodeRegion getInfoTypeAMTSByAdr getInfoTypeAMTSByCodeRegion testService" />
+		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
+        	<parameter qname="main:date" type="xsd:date"/>
+      	</operation>
+      	
+      	<beanMapping qname="store:TSCountByOwnType" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByOwnType" />
+      	<beanMapping qname="store:TSCountByAddr" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByAddr" />
+      	<beanMapping qname="store:HumanSearchResult" languageSpecificType="java:kz.lof.webservices.udp.store.HumanSearchResult" />
+		<beanMapping qname="store:VehicleShortData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleShortData" />
+		<beanMapping qname="store:TheftSearchResult" languageSpecificType="java:kz.lof.webservices.udp.store.TheftSearchResult" />
+		<beanMapping qname="store:VehicleSearchResult" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleSearchResult" />
+		<beanMapping qname="store:TrustData" languageSpecificType="java:kz.lof.webservices.udp.store.TrustData" />
+		<beanMapping qname="store:Color" languageSpecificType="java:kz.lof.webservices.udp.store.Color" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.udp.store.District" />
+		<beanMapping qname="store:DriverPassport" languageSpecificType="java:kz.lof.webservices.udp.store.DriverPassport" />
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.udp.store.Address" />
+		<beanMapping qname="store:HumanShortData" languageSpecificType="java:kz.lof.webservices.udp.store.HumanShortData" />
+		<beanMapping qname="store:TrustType" languageSpecificType="java:kz.lof.webservices.udp.store.TrustType" />
+		<beanMapping qname="store:CheckupData" languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.udp.store.Region" />
+		<beanMapping qname="store:TaxData" languageSpecificType="java:kz.lof.webservices.udp.store.TaxData" />
+		<beanMapping qname="store:VehicleFullData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleFullData" />
+		<beanMapping qname="store:TSCountByCategory" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByCategory" />
+		<beanMapping qname="store:TSCountByYear" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByYear" />
+		<beanMapping qname="store:TSCountByMark" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByMark" />
+		<beanMapping qname="store:VehicleCountData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleCountData" />
+		<beanMapping qname="store:VehicleCountResult" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleCountResult" />
+		<arrayMapping qname="store:TSCountByOwnTypeArray" type="java:kz.lof.webservices.udp.store.TSCountByOwnType[]" innerType="store:TSCountByOwnType" />
+		<arrayMapping qname="store:HumanShortDataArray" type="java:kz.lof.webservices.udp.store.HumanShortData[]" innerType="store:HumanShortData" />
+		<arrayMapping qname="store:TSCountByAddrArray" type="java:kz.lof.webservices.udp.store.TSCountByAddr[]" innerType="store:TSCountByAddr" />
+		<arrayMapping qname="store:VehicleCountDataArray" type="java:kz.lof.webservices.udp.store.VehicleCountData[]" innerType="store:VehicleCountData" />
+		<arrayMapping qname="store:TSCountByMarkArray" type="java:kz.lof.webservices.udp.store.TSCountByMark[]" innerType="store:TSCountByMark" />
+		<arrayMapping qname="store:TSCountByCategoryArray" type="java:kz.lof.webservices.udp.store.TSCountByCategory[]" innerType="store:TSCountByCategory" />
+		<arrayMapping qname="store:TSCountByYearArray" type="java:kz.lof.webservices.udp.store.TSCountByYear[]" innerType="store:TSCountByYear" />
+		<arrayMapping qname="store:TrustDataArray" type="java:kz.lof.webservices.udp.store.TrustData[]" innerType="store:TrustData" />
+		<arrayMapping qname="store:TaxDataArray" type="java:kz.lof.webservices.udp.store.TaxData[]" innerType="store:TaxData" />
+		<arrayMapping qname="store:VehicleShortDataArray" type="java:kz.lof.webservices.udp.store.VehicleShortData[]" innerType="store:VehicleShortData" />
+		<arrayMapping qname="store:CheckupDataArray" type="java:kz.lof.webservices.udp.store.CheckupData[]" innerType="store:CheckupData" />
+		<arrayMapping qname="store:AddressArray" type="java:kz.lof.webservices.udp.store.Address[]" innerType="store:AddressArray" />
+		<arrayMapping qname="store:DistrictArray" type="java:kz.lof.webservices.udp.store.District[]" innerType="store:DistrictArray" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		
+	</service>
+</deployment>

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <globalConfiguration>
+  <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="disablePrettyXML" value="true"/>
+  <parameter name="adminPassword" value="admin"/>
+  <parameter name="attachments.Directory" value="D:\Development\workspace\Spring\webapps\WS\WEB-INF\attachments"/>
+  <parameter name="dotNetSoapEncFix" value="true"/>
+  <parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <parameter name="sendXMLDeclaration" value="true"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <requestFlow>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="session"/>
+   </handler>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="request"/>
+    <parameter name="extension" value=".jwr"/>
+   </handler>
+  </requestFlow>
+ </globalConfiguration>
+ <handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <handler name="soapmonitor" type="java:org.apache.axis.handlers.SOAPMonitorHandler">
+  <parameter name="wsdlURL" value="/axis/SOAPMonitorService-impl.wsdl"/>
+  <parameter name="serviceName" value="SOAPMonitorService"/>
+  <parameter name="namespace" value="http://tempuri.org/wsdl/2001/12/SOAPMonitorService-impl.wsdl"/>
+  <parameter name="portName" value="Demo"/>
+ </handler>
+ <service name="UDPCamService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getAddressByFIO" qname="ns1:getAddressByFIO" returnQName="ns1:getAddressByFIOReturn" returnType="ns2:HumanShortData" soapAction="" xmlns:ns1="http://udp.webservices.lof.kz" xmlns:ns2="http://store.udp.webservices.lof.kz">
+   <parameter qname="ns1:firstName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns1:lastName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns1:middleName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns1:birthDate" type="xsd:date" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns1:lang" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </operation>
+  <parameter name="allowedMethods" value="getAddressByFIO getFullDataByGRNZ getWarrByGRNZ testService"/>
+  <parameter name="className" value="kz.lof.webservices.udp.UDPCamService"/>
+  <parameter name="wsdlTargetNamespace" value="http://udp.webservices.lof.kz"/>
+  <parameter name="sendXsiTypes" value="false"/>
+  <parameter name="sendMultiRefs" value="false"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TrustData" qname="ns3:TrustData" xmlns:ns3="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Color" qname="ns4:Color" xmlns:ns4="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.District" qname="ns5:District" xmlns:ns5="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Address" qname="ns6:Address" xmlns:ns6="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.HumanShortData" qname="ns7:HumanShortData" xmlns:ns7="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TrustType" qname="ns8:TrustType" xmlns:ns8="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData" qname="ns9:CheckupData" xmlns:ns9="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Region" qname="ns10:Region" xmlns:ns10="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TaxData" qname="ns11:TaxData" xmlns:ns11="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleFullData" qname="ns12:VehicleFullData" xmlns:ns12="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns13:ServiceInfo" xmlns:ns13="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns14:InfoEntry" xmlns:ns14="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns15:TrustData" languageSpecificType="java:kz.lof.webservices.udp.store.TrustData[]" qname="ns15:TrustDataArray" xmlns:ns15="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns16:TaxData" languageSpecificType="java:kz.lof.webservices.udp.store.TaxData[]" qname="ns16:TaxDataArray" xmlns:ns16="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns17:CheckupData" languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData[]" qname="ns17:CheckupDataArray" xmlns:ns17="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns18:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns18:InfoEntryArray" xmlns:ns18="http://common.webservices.lof.kz"/>
+ </service>
+ <service name="UDPService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getLog" qname="ns19:getLog" returnQName="ns19:getLogReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://udp.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter qname="ns19:date" type="xsd:date"/>
+  </operation>
+  <parameter name="allowedMethods" value="getLog getDataByFIO getDataByGRNZ getDataByIIN getDataByOrgName    getDataByOwnerId getDataByRegId getDataBySRTS getTheftData getCountAMTSByAdr getCountAMTSByCodeRegion    getMarkAMTSByCodeRegion getMarkAMTSByAdr getInfoYearAMTSByCodeRegion getInfoYearAMTSByAdr    getInfoDrivLicByCodeRegion getInfoDrivLicByAdr getInfoOwnerTSByAdr getInfoOwnerTSByCodeRegion    getCountOwnerTSByAdr getCountOwnerTSByCodeRegion getInfoTypeAMTSByAdr getInfoTypeAMTSByCodeRegion testService"/>
+  <parameter name="className" value="kz.lof.webservices.udp.UDPService"/>
+  <parameter name="wsdlTargetNamespace" value="http://udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByOwnType" qname="ns20:TSCountByOwnType" xmlns:ns20="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByAddr" qname="ns21:TSCountByAddr" xmlns:ns21="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.HumanSearchResult" qname="ns22:HumanSearchResult" xmlns:ns22="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleShortData" qname="ns23:VehicleShortData" xmlns:ns23="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TheftSearchResult" qname="ns24:TheftSearchResult" xmlns:ns24="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleSearchResult" qname="ns25:VehicleSearchResult" xmlns:ns25="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TrustData" qname="ns26:TrustData" xmlns:ns26="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Color" qname="ns27:Color" xmlns:ns27="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.District" qname="ns28:District" xmlns:ns28="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.DriverPassport" qname="ns29:DriverPassport" xmlns:ns29="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Address" qname="ns30:Address" xmlns:ns30="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.HumanShortData" qname="ns31:HumanShortData" xmlns:ns31="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TrustType" qname="ns32:TrustType" xmlns:ns32="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData" qname="ns33:CheckupData" xmlns:ns33="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.Region" qname="ns34:Region" xmlns:ns34="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TaxData" qname="ns35:TaxData" xmlns:ns35="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleFullData" qname="ns36:VehicleFullData" xmlns:ns36="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByCategory" qname="ns37:TSCountByCategory" xmlns:ns37="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByYear" qname="ns38:TSCountByYear" xmlns:ns38="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByMark" qname="ns39:TSCountByMark" xmlns:ns39="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleCountData" qname="ns40:VehicleCountData" xmlns:ns40="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.udp.store.VehicleCountResult" qname="ns41:VehicleCountResult" xmlns:ns41="http://store.udp.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns42:ServiceInfo" xmlns:ns42="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns43:InfoEntry" xmlns:ns43="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns44:TSCountByOwnType" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByOwnType[]" qname="ns44:TSCountByOwnTypeArray" xmlns:ns44="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns45:HumanShortData" languageSpecificType="java:kz.lof.webservices.udp.store.HumanShortData[]" qname="ns45:HumanShortDataArray" xmlns:ns45="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns46:TSCountByAddr" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByAddr[]" qname="ns46:TSCountByAddrArray" xmlns:ns46="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns47:VehicleCountData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleCountData[]" qname="ns47:VehicleCountDataArray" xmlns:ns47="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns48:TSCountByMark" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByMark[]" qname="ns48:TSCountByMarkArray" xmlns:ns48="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns49:TSCountByCategory" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByCategory[]" qname="ns49:TSCountByCategoryArray" xmlns:ns49="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns50:TSCountByYear" languageSpecificType="java:kz.lof.webservices.udp.store.TSCountByYear[]" qname="ns50:TSCountByYearArray" xmlns:ns50="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns51:TrustData" languageSpecificType="java:kz.lof.webservices.udp.store.TrustData[]" qname="ns51:TrustDataArray" xmlns:ns51="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns52:TaxData" languageSpecificType="java:kz.lof.webservices.udp.store.TaxData[]" qname="ns52:TaxDataArray" xmlns:ns52="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns53:VehicleShortData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleShortData[]" qname="ns53:VehicleShortDataArray" xmlns:ns53="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns54:CheckupData" languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData[]" qname="ns54:CheckupDataArray" xmlns:ns54="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns55:AddressArray" languageSpecificType="java:kz.lof.webservices.udp.store.Address[]" qname="ns55:AddressArray" xmlns:ns55="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns56:DistrictArray" languageSpecificType="java:kz.lof.webservices.udp.store.District[]" qname="ns56:DistrictArray" xmlns:ns56="http://store.udp.webservices.lof.kz"/>
+  <arrayMapping innerType="ns57:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns57:InfoEntryArray" xmlns:ns57="http://common.webservices.lof.kz"/>
+ </service>
+ <service name="HumansSearchService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getLog" qname="ns58:getLog" returnQName="ns58:getLogReturn" returnType="xsd:string" soapAction="" xmlns:ns58="http://ump.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter qname="ns58:date" type="xsd:date"/>
+  </operation>
+  <requestFlow>
+   <handler type="soapmonitor"/>
+  </requestFlow>
+  <responseFlow>
+   <handler type="soapmonitor"/>
+  </responseFlow>
+  <parameter name="allowedMethods" value="getProzhivByCodeRegion getCountCriminalsByAdr getCountCriminalsByCodeRegion getLog getAllCountries getAllDistricts getAllStreets getCitizenByIIN getCountry getDistricts getFullData getHumanByAddr getHumanByDoc getHumanByFIO getStreets    getNationalityByAddr getProzhivByAddr getCntAdamByAge getInfoMigrationByAdr getInfoMigrationByCodeRegion getInfoMigrationNationByAdr getInfoMigrationNationByCodeRegion getInfoMigrationReasonByAdr  getInfoMigrationReasonByCodeRegion getFlats   getMigrationSpecByAdr getMigrationSpecByCodeRegion getMigrationNatSpecByAdr getMigrationNatSpecByCodeRegion getMigrationNatEducByAdr getMigrationNatEducByCodeRegion getCountTypeRegByAdr getCountTypeRegByCodeRegion getHouses getInfoMigrationLiveByCodeRegion testService"/>
+  <parameter name="className" value="kz.lof.webservices.ump.HumansSearchService"/>
+  <parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Address" qname="ns59:Address" xmlns:ns59="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Apartment" qname="ns60:Apartment" xmlns:ns60="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.ApartmentType" qname="ns61:ApartmentType" xmlns:ns61="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Education" qname="ns62:Education" xmlns:ns62="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.City" qname="ns63:City" xmlns:ns63="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Country" qname="ns64:Country" xmlns:ns64="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.District" qname="ns65:District" xmlns:ns65="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.DocType" qname="ns66:DocType" xmlns:ns66="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Document" qname="ns67:Document" xmlns:ns67="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.HumanFullData" qname="ns68:HumanFullData" xmlns:ns68="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.HumanShortData" qname="ns69:HumanShortData" xmlns:ns69="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.HumansSearchResult" qname="ns70:HumansSearchResult" xmlns:ns70="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Nationality" qname="ns71:Nationality" xmlns:ns71="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Region" qname="ns72:Region" xmlns:ns72="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.RegType" qname="ns73:RegType" xmlns:ns73="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Relation" qname="ns74:Relation" xmlns:ns74="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Street" qname="ns75:Street" xmlns:ns75="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.VisitPurpose" qname="ns76:VisitPurpose" xmlns:ns76="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.VisitReason" qname="ns77:VisitReason" xmlns:ns77="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.MigrationData" qname="ns78:MigrationData" xmlns:ns78="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.NatCount" qname="ns79:NatCount" xmlns:ns79="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CountByAge" qname="ns80:CountByAge" xmlns:ns80="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.NatEducData" qname="ns81:NatEducData" xmlns:ns81="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.ReasonData" qname="ns82:ReasonData" xmlns:ns82="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.SpecCount" qname="ns83:SpecCount" xmlns:ns83="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.TypeRegData" qname="ns84:TypeRegData" xmlns:ns84="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CriminalsData" qname="ns85:CriminalsData" xmlns:ns85="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByApartment" qname="ns86:CountMigByApartment" xmlns:ns86="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.MigrationLiveData" qname="ns87:MigrationLiveData" xmlns:ns87="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByNat" qname="ns88:CountMigByNat" xmlns:ns88="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.MigrationNatData" qname="ns89:MigrationNatData" xmlns:ns89="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CountByAddr" qname="ns90:CountByAddr" xmlns:ns90="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.CountByReason" qname="ns91:CountByReason" xmlns:ns91="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.MigrationReasonData" qname="ns92:MigrationReasonData" xmlns:ns92="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.RegTypeCount" qname="ns93:RegTypeCount" xmlns:ns93="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns94:ServiceInfo" xmlns:ns94="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns95:InfoEntry" xmlns:ns95="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns96:RegTypeCount" languageSpecificType="java:kz.lof.webservices.ump.store.RegTypeCount[]" qname="ns96:RegTypeCountArray" xmlns:ns96="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns97:CountByReason" languageSpecificType="java:kz.lof.webservices.ump.store.CountByReason[]" qname="ns97:CountByReasonArray" xmlns:ns97="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns98:MigrationReasonData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationReasonData[]" qname="ns98:MigrationReasonDataArray" xmlns:ns98="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns99:CountByAddr" languageSpecificType="java:kz.lof.webservices.ump.store.CountByAddr[]" qname="ns99:CountByAddrArray" xmlns:ns99="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns100:CountMigByApartment" languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByApartment[]" qname="ns100:CountMigByApartmentArray" xmlns:ns100="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns101:MigrationLiveData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationLiveData[]" qname="ns101:MigrationLiveDataArray" xmlns:ns101="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns102:CountMigByNat" languageSpecificType="java:kz.lof.webservices.ump.store.CountMigByNat[]" qname="ns102:CountMigByNatArray" xmlns:ns102="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns103:MigrationNatData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationNatData[]" qname="ns103:MigrationNatDataArray" xmlns:ns103="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns104:CriminalsData" languageSpecificType="java:kz.lof.webservices.ump.store.CriminalsData[]" qname="ns104:CriminalsDataArray" xmlns:ns104="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns105:Education" languageSpecificType="java:kz.lof.webservices.ump.store.Education[]" qname="ns105:EducationArray" xmlns:ns105="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns106:CountByAge" languageSpecificType="java:kz.lof.webservices.ump.store.CountByAge[]" qname="ns106:CountByAgeArray" xmlns:ns106="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns107:VisitReason" languageSpecificType="java:kz.lof.webservices.ump.store.VisitReason[]" qname="ns107:VisitReasonArray" xmlns:ns107="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns108:MigrationData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationData[]" qname="ns108:MigrationDataArray" xmlns:ns108="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns109:NatCount" languageSpecificType="java:kz.lof.webservices.ump.store.NatCount[]" qname="ns109:NatCountArray" xmlns:ns109="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns110:NatEducData" languageSpecificType="java:kz.lof.webservices.ump.store.NatEducData[]" qname="ns110:NatEducDataArray" xmlns:ns110="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns111:ReasonData" languageSpecificType="java:kz.lof.webservices.ump.store.ReasonData[]" qname="ns111:ReasonDataArray" xmlns:ns111="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns112:SpecCount" languageSpecificType="java:kz.lof.webservices.ump.store.SpecCount[]" qname="ns112:SpecCountArray" xmlns:ns112="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns113:TypeRegData" languageSpecificType="java:kz.lof.webservices.ump.store.TypeRegData[]" qname="ns113:TypeRegDataArray" xmlns:ns113="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns114:HumanShortData" languageSpecificType="java:kz.lof.webservices.ump.store.HumanShortData[]" qname="ns114:HumanShortDataArray" xmlns:ns114="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns115:Document" languageSpecificType="java:kz.lof.webservices.ump.store.Document[]" qname="ns115:DocumentArray" xmlns:ns115="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns116:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns116:InfoEntryArray" xmlns:ns116="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns117:Address" languageSpecificType="java:kz.lof.webservices.ump.store.Address[]" qname="ns117:AddressArray" xmlns:ns117="http://store.ump.webservices.lof.kz"/>
+ </service>
+ <service name="BTIService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getLog" qname="ns118:getLog" returnQName="ns118:getLogReturn" returnType="xsd:string" soapAction="" xmlns:ns118="http://bti.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter qname="ns118:date" type="xsd:date"/>
+  </operation>
+  <parameter name="allowedMethods" value="getLog getBuildingKinds getDataByAddress getDataByBuildingId getDataByDoc getDataByFIO getDataByIIN getDataByOrgName getDataByOwnerId getDocKinds getDocTypes getFullDataByDoc getStreets getAllStreets testService getHouses"/>
+  <parameter name="className" value="kz.lof.webservices.bti.BTIService"/>
+  <parameter name="wsdlTargetNamespace" value="http://bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.Address" qname="ns119:Address" xmlns:ns119="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.ApartmentData" qname="ns120:ApartmentData" xmlns:ns120="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.BuildingFullData" qname="ns121:BuildingFullData" xmlns:ns121="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.BuildingKind" qname="ns122:BuildingKind" xmlns:ns122="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.BuildingPurpose" qname="ns123:BuildingPurpose" xmlns:ns123="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.City" qname="ns124:City" xmlns:ns124="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.Country" qname="ns125:Country" xmlns:ns125="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.District" qname="ns126:District" xmlns:ns126="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.DocKind" qname="ns127:DocKind" xmlns:ns127="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.DocType" qname="ns128:DocType" xmlns:ns128="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.DocumentData" qname="ns129:DocumentData" xmlns:ns129="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.HousePart" qname="ns130:HousePart" xmlns:ns130="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.IDDocType" qname="ns131:IDDocType" xmlns:ns131="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.IDDocument" qname="ns132:IDDocument" xmlns:ns132="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.PersonSearchResult" qname="ns133:PersonSearchResult" xmlns:ns133="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.PersonShortData" qname="ns134:PersonShortData" xmlns:ns134="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.PropertyForm" qname="ns135:PropertyForm" xmlns:ns135="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.PropertyKind" qname="ns136:PropertyKind" xmlns:ns136="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.RealtyFullData" qname="ns137:RealtyFullData" xmlns:ns137="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.RealtySearchResult" qname="ns138:RealtySearchResult" xmlns:ns138="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.RealtyShortData" qname="ns139:RealtyShortData" xmlns:ns139="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.Region" qname="ns140:Region" xmlns:ns140="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.Street" qname="ns141:Street" xmlns:ns141="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.StreetType" qname="ns142:StreetType" xmlns:ns142="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.bti.store.WallMaterial" qname="ns143:WallMaterial" xmlns:ns143="http://store.bti.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns144:ServiceInfo" xmlns:ns144="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns145:InfoEntry" xmlns:ns145="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns146:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns146:InfoEntryArray" xmlns:ns146="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns147:PersonShortData" languageSpecificType="java:kz.lof.webservices.bti.store.PersonShortData[]" qname="ns147:PersonShortDataArray" xmlns:ns147="http://store.bti.webservices.lof.kz"/>
+  <arrayMapping innerType="ns148:RealtyShortData" languageSpecificType="java:kz.lof.webservices.bti.store.RealtyShortData[]" qname="ns148:RealtyShortDataArray" xmlns:ns148="http://store.bti.webservices.lof.kz"/>
+  <arrayMapping innerType="ns149:ApartmentData" languageSpecificType="java:kz.lof.webservices.bti.store.ApartmentData[]" qname="ns149:ApartmentDataArray" xmlns:ns149="http://store.bti.webservices.lof.kz"/>
+ </service>
+ <service name="SOAPMonitorService" provider="java:RPC">
+  <parameter name="allowedMethods" value="publishMessage"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="className" value="org.apache.axis.monitor.SOAPMonitorService"/>
+ </service>
+ <service name="UAIGService" provider="java:RPC" style="wrapped" use="literal">
+  <parameter name="allowedMethods" value="getDataByRNNCustomer getDataByNumberDeclaration getDataByPeriod getDataById"/>
+  <parameter name="className" value="kz.lof.webservices.uaig.UAIGService"/>
+  <parameter name="wsdlTargetNamespace" value="http://uaig.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.uaig.store.ShortData" qname="ns150:ShortData" xmlns:ns150="http://store.uaig.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.uaig.store.FullData" qname="ns151:FullData" xmlns:ns151="http://store.uaig.webservices.lof.kz"/>
+  <arrayMapping innerType="ns152:ShortData" languageSpecificType="java:kz.lof.webservices.uaig.store.ShortData[]" qname="ns152:ShortDataArray" xmlns:ns152="http://store.uaig.webservices.lof.kz"/>
+ </service>
+ <service name="SocialService" provider="java:RPC" style="wrapped" use="literal">
+  <parameter name="allowedMethods" value="getHumanByDistrict getHumanByAddress getHumanByFullName getHumanById getStreets getDistricts"/>
+  <parameter name="className" value="kz.lof.webservices.social.SocialService"/>
+  <parameter name="wsdlTargetNamespace" value="http://social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.Address" qname="ns153:Address" xmlns:ns153="http://store.social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.District" qname="ns154:District" xmlns:ns154="http://store.social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.HumanFullData" qname="ns155:HumanFullData" xmlns:ns155="http://store.social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.HumanSearchResult" qname="ns156:HumanSearchResult" xmlns:ns156="http://store.social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.HumanShortData" qname="ns157:HumanShortData" xmlns:ns157="http://store.social.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.social.store.Street" qname="ns158:Street" xmlns:ns158="http://store.social.webservices.lof.kz"/>
+  <arrayMapping innerType="ns159:Street" languageSpecificType="java:kz.lof.webservices.social.store.Street[]" qname="ns159:StreetArray" xmlns:ns159="http://store.social.webservices.lof.kz"/>
+  <arrayMapping innerType="ns160:District" languageSpecificType="java:kz.lof.webservices.social.store.District[]" qname="ns160:DistrictArray" xmlns:ns160="http://store.social.webservices.lof.kz"/>
+  <arrayMapping innerType="ns161:Address" languageSpecificType="java:kz.lof.webservices.social.store.Address[]" qname="ns161:AddressArray" xmlns:ns161="http://store.social.webservices.lof.kz"/>
+  <arrayMapping innerType="ns162:HumanShortData" languageSpecificType="java:kz.lof.webservices.social.store.HumanShortData[]" qname="ns162:HumanShortDataArray" xmlns:ns162="http://store.social.webservices.lof.kz"/>
+ </service>
+ <service name="ForeignersSearchService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getLog" qname="ns163:getLog" returnQName="ns163:getLogReturn" returnType="xsd:string" soapAction="" xmlns:ns163="http://ump.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter qname="ns163:date" type="xsd:date"/>
+  </operation>
+  <parameter name="allowedMethods" value="getLog getFullData getPersonByDoc getPersonByFIO testService"/>
+  <parameter name="className" value="kz.lof.webservices.ump.ForeignersSearchService"/>
+  <parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz"/>
+  <parameter name="sendXsiTypes" value="false"/>
+  <parameter name="sendMultiRefs" value="false"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Address" qname="ns164:Address" xmlns:ns164="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.City" qname="ns165:City" xmlns:ns165="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Country" qname="ns166:Country" xmlns:ns166="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.District" qname="ns167:District" xmlns:ns167="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.DocType" qname="ns168:DocType" xmlns:ns168="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Document" qname="ns169:Document" xmlns:ns169="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Nationality" qname="ns170:Nationality" xmlns:ns170="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.PersonFullData" qname="ns171:PersonFullData" xmlns:ns171="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.PersonSearchResult" qname="ns172:PersonSearchResult" xmlns:ns172="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.PersonShortData" qname="ns173:PersonShortData" xmlns:ns173="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Region" qname="ns174:Region" xmlns:ns174="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.Street" qname="ns175:Street" xmlns:ns175="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.VisitData" qname="ns176:VisitData" xmlns:ns176="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.VisitPurpose" qname="ns177:VisitPurpose" xmlns:ns177="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns178:ServiceInfo" xmlns:ns178="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns179:InfoEntry" xmlns:ns179="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns180:VisitData" languageSpecificType="java:kz.lof.webservices.ump.store.VisitData[]" qname="ns180:VisitDataArray" xmlns:ns180="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns181:PersonShortData" languageSpecificType="java:kz.lof.webservices.ump.store.PersonShortData[]" qname="ns181:PersonShortDataArray" xmlns:ns181="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns182:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns182:InfoEntryArray" xmlns:ns182="http://common.webservices.lof.kz"/>
+ </service>
+ <service name="Simple" provider="java:RPC" style="wrapped" use="literal">
+  <parameter name="allowedMethods" value="doSomething"/>
+  <parameter name="className" value="kz.lof.webservices.Simple"/>
+  <parameter name="wsdlTargetNamespace" value="http://webservices.lof.kz"/>
+  <parameter name="sendXsiTypes" value="false"/>
+  <parameter name="sendMultiRefs" value="false"/>
+ </service>
+ <service name="TaxPayService" provider="java:RPC" style="wrapped" use="literal">
+  <operation name="getLog" qname="ns183:getLog" returnQName="ns183:getLogReturn" returnType="xsd:string" soapAction="" xmlns:ns183="http://tax.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <parameter qname="ns183:date" type="xsd:date"/>
+  </operation>
+  <operation name="getOrgsByAddresses" qname="ns184:getOrgsByAddresses" returnQName="ns184:getOrgsByAddressesReturn" returnType="ns185:TaxPayersSearchResult" soapAction="" xmlns:ns184="http://tax.webservices.lof.kz" xmlns:ns185="http://store.tax.webservices.lof.kz">
+   <parameter qname="ns184:addresses" type="ns185:Address"/>
+   <parameter qname="ns184:fromDate" type="xsd:date" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns184:toDate" type="xsd:date" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns184:pageNum" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns184:resultsOnPage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <parameter qname="ns184:lang" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </operation>
+  <parameter name="allowedMethods" value="getDataByOrgNameGis getLog getDataByFIO getDataByIIN getDataByOrgName getDataByRNN getFullData getOrgsByAddresses testService"/>
+  <parameter name="className" value="kz.lof.webservices.tax.TaxPayService"/>
+  <parameter name="wsdlTargetNamespace" value="http://tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.ActivityType" qname="ns186:ActivityType" xmlns:ns186="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Address" qname="ns187:Address" xmlns:ns187="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.LegalPersonType" qname="ns188:LegalPersonType" xmlns:ns188="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.OrgForm" qname="ns189:OrgForm" xmlns:ns189="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Place" qname="ns190:Place" xmlns:ns190="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.PropertyForm" qname="ns191:PropertyForm" xmlns:ns191="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Region" qname="ns192:Region" xmlns:ns192="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.State" qname="ns193:State" xmlns:ns193="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Street" qname="ns194:Street" xmlns:ns194="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerFullData" qname="ns195:TaxPayerFullData" xmlns:ns195="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerShortData" qname="ns196:TaxPayerShortData" xmlns:ns196="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayersSearchResult" qname="ns197:TaxPayersSearchResult" xmlns:ns197="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns198:ServiceInfo" xmlns:ns198="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns199:InfoEntry" xmlns:ns199="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns200:TaxPayerShortData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerShortData[]" qname="ns200:TaxPayerShortDataArray" xmlns:ns200="http://store.tax.webservices.lof.kz"/>
+  <arrayMapping innerType="ns201:TaxPayerFullData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxPayerFullData[]" qname="ns201:TaxPayerFullDataArray" xmlns:ns201="http://store.tax.webservices.lof.kz"/>
+  <arrayMapping innerType="ns202:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns202:InfoEntryArray" xmlns:ns202="http://common.webservices.lof.kz"/>
+ </service>
+ <service name="AdminService" provider="java:MSG">
+  <parameter name="allowedMethods" value="AdminService"/>
+  <parameter name="enableRemoteAdmin" value="false"/>
+  <parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+ </service>
+ <service name="TaxIndService" provider="java:RPC" style="wrapped" use="literal">
+  <parameter name="allowedMethods" value="getDataByFIO getDataByRNN getFullData testService"/>
+  <parameter name="className" value="kz.lof.webservices.tax.TaxIndService"/>
+  <parameter name="wsdlTargetNamespace" value="http://tax.webservices.lof.kz"/>
+  <parameter name="sendXsiTypes" value="false"/>
+  <parameter name="sendMultiRefs" value="false"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Address" qname="ns203:Address" xmlns:ns203="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Place" qname="ns204:Place" xmlns:ns204="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Region" qname="ns205:Region" xmlns:ns205="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.State" qname="ns206:State" xmlns:ns206="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.Street" qname="ns207:Street" xmlns:ns207="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndFullData" qname="ns208:TaxIndFullData" xmlns:ns208="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndSearchResult" qname="ns209:TaxIndSearchResult" xmlns:ns209="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndShortData" qname="ns210:TaxIndShortData" xmlns:ns210="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.tax.store.TaxOffice" qname="ns211:TaxOffice" xmlns:ns211="http://store.tax.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns212:ServiceInfo" xmlns:ns212="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns213:InfoEntry" xmlns:ns213="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns214:TaxIndShortData" languageSpecificType="java:kz.lof.webservices.tax.store.TaxIndShortData[]" qname="ns214:TaxIndShortDataArray" xmlns:ns214="http://store.tax.webservices.lof.kz"/>
+  <arrayMapping innerType="ns215:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns215:InfoEntryArray" xmlns:ns215="http://common.webservices.lof.kz"/>
+ </service>
+ <service name="Version" provider="java:RPC">
+  <parameter name="allowedMethods" value="getVersion"/>
+  <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+ <service name="GKZService" provider="java:RPC" style="wrapped" use="literal">
+  <requestFlow>
+   <handler type="soapmonitor"/>
+  </requestFlow>
+  <responseFlow>
+   <handler type="soapmonitor"/>
+  </responseFlow>
+  <parameter name="allowedMethods" value="getDataByCadastrNumber getDataByCompany getDataByDocument    getDataByFIO getDataQuarter getDataShort getLandFullData getRegion getStreet"/>
+  <parameter name="className" value="kz.lof.webservices.gkz.GKZService"/>
+  <parameter name="wsdlTargetNamespace" value="http://gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.CompanyShortData" qname="ns216:CompanyShortData" xmlns:ns216="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.CompanyShortDataResult" qname="ns217:CompanyShortDataResult" xmlns:ns217="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.District" qname="ns218:District" xmlns:ns218="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.HumanShortData" qname="ns219:HumanShortData" xmlns:ns219="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.HumanShortDataResult" qname="ns220:HumanShortDataResult" xmlns:ns220="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.LandFullData" qname="ns221:LandFullData" xmlns:ns221="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.LandShortData" qname="ns222:LandShortData" xmlns:ns222="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.LandShortDataResult" qname="ns223:LandShortDataResult" xmlns:ns223="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.OwnerType" qname="ns224:OwnerType" xmlns:ns224="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.Quarter" qname="ns225:Quarter" xmlns:ns225="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.QuarterSearchResult" qname="ns226:QuarterSearchResult" xmlns:ns226="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.RegionSearchResult" qname="ns227:RegionSearchResult" xmlns:ns227="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.Street" qname="ns228:Street" xmlns:ns228="http://store.gkz.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.gkz.store.StreetSearchResult" qname="ns229:StreetSearchResult" xmlns:ns229="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns230:Street" languageSpecificType="java:kz.lof.webservices.gkz.store.Street[]" qname="ns230:StreetArray" xmlns:ns230="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns231:Quarter" languageSpecificType="java:kz.lof.webservices.gkz.store.Quarter[]" qname="ns231:QuarterArray" xmlns:ns231="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns232:District" languageSpecificType="java:kz.lof.webservices.gkz.store.District[]" qname="ns232:DistrictArray" xmlns:ns232="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns233:LandShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.LandShortData[]" qname="ns233:LandShortDataArray" xmlns:ns233="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns234:HumanShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.HumanShortData[]" qname="ns234:HumanShortDataArray" xmlns:ns234="http://store.gkz.webservices.lof.kz"/>
+  <arrayMapping innerType="ns235:CompanyShortData" languageSpecificType="java:kz.lof.webservices.gkz.store.CompanyShortData[]" qname="ns235:CompanyShortDataArray" xmlns:ns235="http://store.gkz.webservices.lof.kz"/>
+ </service>
+ <service name="QuestService" provider="java:RPC" style="wrapped" use="literal">
+  <parameter name="allowedMethods" value="searchPeople testService"/>
+  <parameter name="className" value="kz.lof.webservices.ump.QuestService"/>
+  <parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz"/>
+  <parameter name="sendXsiTypes" value="false"/>
+  <parameter name="sendMultiRefs" value="false"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.QuestData" qname="ns236:QuestData" xmlns:ns236="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.WantedData" qname="ns237:WantedData" xmlns:ns237="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.ump.store.WantedResult" qname="ns238:WantedResult" xmlns:ns238="http://store.ump.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" qname="ns239:ServiceInfo" xmlns:ns239="http://common.webservices.lof.kz"/>
+  <beanMapping languageSpecificType="java:kz.lof.webservices.common.InfoEntry" qname="ns240:InfoEntry" xmlns:ns240="http://common.webservices.lof.kz"/>
+  <arrayMapping innerType="ns241:QuestData" languageSpecificType="java:kz.lof.webservices.ump.store.QuestData[]" qname="ns241:QuestDataArray" xmlns:ns241="http://store.ump.webservices.lof.kz"/>
+  <arrayMapping innerType="ns242:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry[]" qname="ns242:InfoEntryArray" xmlns:ns242="http://common.webservices.lof.kz"/>
+ </service>
+ <transport name="http">
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+  <parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </transport>
+ <transport name="local">
+  <responseFlow>
+   <handler type="LocalResponder"/>
+  </responseFlow>
+ </transport>
+</deployment>

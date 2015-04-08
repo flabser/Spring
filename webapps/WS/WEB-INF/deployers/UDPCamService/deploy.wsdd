@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="UDPCamService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.udp.webservices.lof.kz" xmlns:main="http://udp.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.udp.UDPCamService" />
+		<parameter name="wsdlTargetNamespace" value="http://udp.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getAddressByFIO getFullDataByGRNZ getWarrByGRNZ testService" />
+		<operation name="getAddressByFIO" qname="main:getAddressByFIO" returnQName="main:getAddressByFIOReturn" returnType="store:HumanShortData">
+			<parameter qname="main:firstName" type="xsd:string" />
+			<parameter qname="main:lastName" type="xsd:string" />
+			<parameter qname="main:middleName" type="xsd:string" />
+			<parameter qname="main:birthDate" type="xsd:date" />
+			<parameter qname="main:lang" type="xsd:string" />
+		</operation>
+		<beanMapping qname="store:DriverPassport" languageSpecificType="java:kz.lof.webservices.udp.store.DriverPassport" />
+		<beanMapping qname="store:TrustData" languageSpecificType="java:kz.lof.webservices.udp.store.TrustData" />
+		<beanMapping qname="store:Color" languageSpecificType="java:kz.lof.webservices.udp.store.Color" />
+		<beanMapping qname="store:District" languageSpecificType="java:kz.lof.webservices.udp.store.District" />
+		<beanMapping qname="store:Address" languageSpecificType="java:kz.lof.webservices.udp.store.Address" />
+		<beanMapping qname="store:HumanShortData" languageSpecificType="java:kz.lof.webservices.udp.store.HumanShortData" />
+		<beanMapping qname="store:TrustType" languageSpecificType="java:kz.lof.webservices.udp.store.TrustType" />
+		<beanMapping qname="store:CheckupData" languageSpecificType="java:kz.lof.webservices.udp.store.CheckupData" />
+		<beanMapping qname="store:Region" languageSpecificType="java:kz.lof.webservices.udp.store.Region" />
+		<beanMapping qname="store:TaxData" languageSpecificType="java:kz.lof.webservices.udp.store.TaxData" />
+		<beanMapping qname="store:VehicleFullData" languageSpecificType="java:kz.lof.webservices.udp.store.VehicleFullData" />
+		<arrayMapping qname="store:TrustDataArray" type="java:kz.lof.webservices.udp.store.TrustData[]" innerType="store:TrustData" />
+		<arrayMapping qname="store:TaxDataArray" type="java:kz.lof.webservices.udp.store.TaxData[]" innerType="store:TaxData" />
+		<arrayMapping qname="store:CheckupDataArray" type="java:kz.lof.webservices.udp.store.CheckupData[]" innerType="store:CheckupData" />
+		<beanMapping qname="common:ServiceInfo" languageSpecificType="java:kz.lof.webservices.common.ServiceInfo" xmlns:common="http://common.webservices.lof.kz" />
+		<beanMapping qname="common:InfoEntry" languageSpecificType="java:kz.lof.webservices.common.InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+		<arrayMapping qname="common:InfoEntryArray" type="java:kz.lof.webservices.common.InfoEntry[]" innerType="common:InfoEntry" xmlns:common="http://common.webservices.lof.kz" />
+	</service>
+</deployment>

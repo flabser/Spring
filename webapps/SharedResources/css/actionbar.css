@@ -1,0 +1,22 @@
+
+/*Панель акции */
+.bar{
+	/*position:absolute;*/
+	background:#FFFFFF;
+	top:3px;
+	padding:3px;
+	width:100%;
+	border-bottom: 1px solid gray;	
+}
+
+
+/*Кнопка на панели акции*/
+.button{
+	vertical-align:4.5px;
+	margin-left:3px;
+	font-size: 1.0em;	
+}
+/*текст ссылки вложения*/
+.linktext{
+	font-size: 1.0em;
+}

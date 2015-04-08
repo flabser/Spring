@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="UAIGService" provider="java:RPC" style="wrapped" use="literal" xmlns:store="http://store.uaig.webservices.lof.kz" xmlns:main="http://uaig.webservices.lof.kz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<parameter name="className" value="kz.lof.webservices.uaig.UAIGService" />
+		<parameter name="wsdlTargetNamespace" value="http://uaig.webservices.lof.kz" />
+		<parameter name="allowedMethods" value="getDataByRNNCustomer getDataByNumberDeclaration getDataByPeriod getDataById" />
+		<beanMapping qname="store:ShortData" languageSpecificType="java:kz.lof.webservices.uaig.store.ShortData" />
+		<beanMapping qname="store:FullData" languageSpecificType="java:kz.lof.webservices.uaig.store.FullData" />
+		<arrayMapping qname="store:ShortDataArray" type="java:kz.lof.webservices.uaig.store.ShortData[]" innerType="store:ShortData" />
+	</service>
+</deployment>
