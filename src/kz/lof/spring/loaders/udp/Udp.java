@@ -362,8 +362,9 @@ public class Udp extends AbstractDaemon{
 
                 try {
                     double rCount = ((double)(file.length() - in.getHeaderLength() - 1)) / (double)in.getRecordLength();
-                    if(colCount != in.getFieldCount() || rCount < 0 || rCount != (double)(rowCount = Math.round((float)rCount)))
-                        throw new Exception("Invalid record count : " + rCount + " ; field count : " + in.getFieldCount());
+                    rowCount = Math.round((float)rCount);
+                   /* if(colCount != in.getFieldCount() || rCount < 0 || rCount != (double)(rowCount = Math.round((float)rCount)))
+                        throw new Exception("Invalid record count : " + rCount + " ; field count : " + in.getFieldCount());*/
 
                 } catch(Exception e) {
                     log.error("File " +file.getName() + " is corrupded!", e);
@@ -378,7 +379,7 @@ public class Udp extends AbstractDaemon{
                 for (int i = 0; i < cycleCount; i++) {
                     for (int j = 0; j < MAX_ROW_TO_COMMIT; j++) {
                         try {
-                            bos.write(createRecordLine(in.nextRecord()).getBytes());
+                            bos.write(createRecordLine(in.nextRecord()).getBytes("UTF-8"));
                         } catch (ScriptException ignored){
                         } catch (Exception e){
                             log.error(e, e);
@@ -391,7 +392,7 @@ public class Udp extends AbstractDaemon{
                 int finiteRowCount = rowCount % MAX_ROW_TO_COMMIT;
                 for (int j = 0; j < finiteRowCount; j++) {
                     try {
-                        bos.write(createRecordLine(in.nextRecord()).getBytes());
+                        bos.write(createRecordLine(in.nextRecord()).getBytes("UTF-8"));
                     } catch (ScriptException ignored){
                     } catch (Exception e){
                         log.error(e, e);
