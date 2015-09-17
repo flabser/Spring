@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
 public class HumansSearchService {
 
 	public HumansSearchResult getHumanByFIO(String firstName, String lastName, String middleName,
@@ -299,6 +300,26 @@ public class HumansSearchService {
 		return result;
 	}
 
+    public String[] getFlatParts(int idStreet, String house, String flatNumber){
+        if(idStreet == 0 || house == null || house.trim().equals("")) return new String[0];
+        ArrayList<String> flatList = new ArrayList<>();
+        Connection conn = Utils.getConnection(OrgType.UMP);
+        try{
+            Statement stmt = conn.createStatement();
+//            String flat_expr = (flatNumber != null && !"".equalsIgnoreCase(flatNumber) ? " and " + createLikeExpression("flat", flatNumber + "*", true) : "") ;
+            String sql = "select part, count(*) from pater where id_street_unique = " + idStreet + " and house = '" + house.trim() + "' and flat = '" + flatNumber + "' group by part";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                flatList.add(rs.getString("part"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Utils.returnConnection(conn, OrgType.UMP);
+        return flatList.toArray(new String[flatList.size()]);
+    }
+
 	public String[] getFlats(int idStreet, String house, String flatNumber){
 		if(idStreet == 0 || house == null || house.trim().equals("")) return new String[0];
 		ArrayList<String> flatList = new ArrayList<>();
@@ -428,7 +449,7 @@ public class HumansSearchService {
 					" LEFT JOIN s_nspnkt AS to_city ON reg_unlive.id_place_in = to_city.id_place_unique" +
 					" LEFT JOIN pater AS to_apartment ON reg_unlive.id_apartment_in = to_apartment.id_apartment" +
 					" LEFT JOIN s_uli AS to_street ON to_apartment.id_street_unique = to_street.id_street_unique" +
-					" WHERE adam.id_people_unique = " + id + " and reg_live.is_actual = true";
+					" WHERE adam.id_people_unique = " + id + " ORDER BY reg_live.is_actual desc, date_registration desc ";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
