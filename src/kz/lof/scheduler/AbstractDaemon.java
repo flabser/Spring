@@ -8,6 +8,7 @@ import kz.lof.server.Server;
 import kz.lof.util.Util;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -56,9 +57,9 @@ public abstract class AbstractDaemon implements IDaemon, Runnable {
 
 	@Override
 	public Calendar getLastSuccessTime() {
-		Preferences pref = Preferences.userRoot().node(org.getOrgType().toString()).node("lastSuccessTime");
+        Preferences pref = Preferences.userRoot().node(this.org != null ? this.org.getOrgType().toString() : "sysDaemons").node("lastSuccessTime");
 
-		Calendar result = new GregorianCalendar();
+        Calendar result = new GregorianCalendar();
 		result.set(Calendar.YEAR, pref.getInt("year", 1990));
 		result.set(Calendar.MONTH, pref.getInt("month", Calendar.JANUARY));
 		result.set(Calendar.DAY_OF_MONTH, pref.getInt("day", 1));
@@ -118,7 +119,8 @@ public abstract class AbstractDaemon implements IDaemon, Runnable {
 		try{
 			setStatus(DaemonStatusType.RUNNING);
             FileAppender fileAppender = new FileAppender();
-            fileAppender.setFile("logs" + File.separator + org.getOrgName().toLowerCase() + File.separator + org.getClassName() + new SimpleDateFormat("ddMMyyHHmmss").format(new Date())+".log");
+            fileAppender.setFile("logs" + File.separator + org.getOrgName().toLowerCase() + File.separator + org.getOrgName() + new SimpleDateFormat("_yyyy_MM_dd.HH_mm").format(new Date())+".log");
+            fileAppender.setLayout(new PatternLayout("%-7p %d [%t] %c %x - %m%n"));
             fileAppender.activateOptions();
             log.addAppender(fileAppender);
 

@@ -1,6 +1,6 @@
 package kz.lof.spring.loaders.udp;
 
-import com.linuxense.javadbf.DBFReader;
+import kz.lof.dbf.DBFReader;
 import kz.lof.scheduler.AbstractDaemon;
 import kz.lof.webservices.Utils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -34,11 +34,11 @@ public class Udp extends AbstractDaemon{
 
         loadedFilesDir = "loaded_" + new SimpleDateFormat("ddMMyyHHmmss").format(new Date());
 
-        String[] fileList = {"srts.dbf", "srts_bg.dbf", "trust.dbf", "ugon.dbf", "vu.dbf"};
-        if(!filesExists(fileList)){
-            log.error("files for load are not found or incomplete!");
-            return 0;
-        }
+//        String[] fileList = {"srts.dbf", "srts_bg.dbf", "trust.dbf", "ugon.dbf", "vu.dbf"};
+//        if(!filesExists(fileList)){
+//            log.error("files for load are not found or incomplete!");
+//            return 0;
+//        }
 
         loadFiles();
         compressFiles();
@@ -57,8 +57,11 @@ public class Udp extends AbstractDaemon{
         if(!file.exists())
             return;
         if(file.isDirectory()){
-            for(File f : file.listFiles())
+            File[] files = file.listFiles();
+            if(files == null) files = new File[0];
+            for(File f : files) {
                 delete(f);
+            }
             file.delete();
         } else {
             file.delete();
@@ -161,122 +164,131 @@ public class Udp extends AbstractDaemon{
         String[] srtss = new String[]{"srts_bg.dbf", "srts.dbf"};
         final int[] idSrts = {1};
         for (String srts : srtss) {
-            new FileLoader(new File(org.getLoadFilePath() + File.separator + srts), "Cp866", 30,
-                    "COPY srts_temp(reg_end_date, grnz, model, year, color_id, srts, " +
-                            "                              volume, reg_date, power, load, seats, weight, " +
-                            "                              status, prev_grnz, prev_srts, comments, " + //is_actual, " +
-                            "                              firstname, lastname, middlename, birthday, " +
-                            "                              region_id, district_id, city, street, " +
-                            "                              house, flat, is_individual, rnn, iin, srts_id, od_fullmd5, od_lessmd5, sg_md5)" +
-                            " FROM "
+            if (Files.exists(Paths.get(org.getLoadFilePath() + File.separator + srts))) {
+
+                new FileLoader(new File(org.getLoadFilePath() + File.separator + srts), "Cp866", 30,
+                        "COPY srts_temp(reg_end_date, grnz, model, year, color_id, srts, " +
+                                "                              volume, reg_date, power, load, seats, weight, " +
+                                "                              status, prev_grnz, prev_srts, comments, " + //is_actual, " +
+                                "                              firstname, lastname, middlename, birthday, " +
+                                "                              region_id, district_id, city, street, " +
+                                "                              house, flat, is_individual, rnn, iin, srts_id, od_fullmd5, od_lessmd5, sg_md5)" +
+                                " FROM "
+                ) {
+                    @Override
+                    public String createRecordLine(String[] row) {
+                        return "" +
+                                row[22] + "\t" +
+                                row[0] + "\t" +
+                                row[2] + "\t" +
+                                row[3] + "\t" +
+                                row[4] + "\t" +
+                                row[1] + "\t" +
+                                row[16] + "\t" +
+                                row[21] + "\t" +
+                                row[17] + "\t" +
+                                row[18] + "\t" +
+                                row[20] + "\t" +
+                                row[19] + "\t" +
+                                ("P".equals(row[24]) ? "t" : "f") + "\t" +
+                                row[25] + "\t" +
+                                row[26] + "\t" +
+                                row[27] + "\t" +
+                                // "t" + "\t" +
+                                getString(row[6]) + "\t" +
+                                getString(row[5]) + "\t" +
+                                getString(row[7]) + "\t" +
+                                row[8] + "\t" +
+                                row[9] + "\t" +
+                                row[10] + "\t" +
+                                getString(row[11]) + "\t" +
+                                getString(row[12]) + "\t" +
+                                row[13] + "\t" +
+                                row[14] + "\t" +
+                                ("2".equals(row[15]) ? "t" : "f") + "\t" +
+                                row[23] + "\t" +
+                                row[28] + "\t" +
+                                idSrts[0]++ + "\t" +
+                                getMd5(row[5] + row[6] + row[7] + row[8] + row[9] + row[10] + row[11] + row[12] + row[13] + row[14] + row[15] + row[23] + row[28]) + "\t" +
+                                getMd5(row[6] + row[5] + row[7] + row[8]) + "\t" +
+                                getMd5(row[1] + row[0]) + "\n";
+                    }
+                };
+            }
+        }
+
+        if (Files.exists(Paths.get(org.getLoadFilePath() + File.separator + "trust.dbf"))) {
+            final int[] idTrust = {1};
+            new FileLoader(new File(org.getLoadFilePath() + File.separator + "trust.dbf"), "Cp866", 9,
+                    "COPY trust_temp(trustdate, regdate, firstname, lastname, " +
+                            "middlename, birthday, trusttype, period, grnz, trust_id, od_lessmd5) FROM "
             ) {
                 @Override
-                public String createRecordLine(String[] row){
+                public String createRecordLine(String[] row) {
                     return "" +
-                            row[22] + "\t" +
-                            row[0] + "\t" +
-                            row[2] + "\t" +
-                            row[3] + "\t" +
-                            row[4] + "\t" +
                             row[1] + "\t" +
-                            row[16] + "\t" +
-                            row[21] + "\t" +
-                            row[17] + "\t" +
-                            row[18] + "\t" +
-                            row[20] + "\t" +
-                            row[19] + "\t" +
-                            ("P".equals(row[24]) ? "t" : "f") + "\t" +
-                            row[25] + "\t" +
-                            row[26] + "\t" +
-                            row[27] + "\t" +
-                           // "t" + "\t" +
-                            getString(row[6]) + "\t" +
+                            row[2] + "\t" +
+                            getString(row[4]) + "\t" +
+                            getString(row[3]) + "\t" +
                             getString(row[5]) + "\t" +
-                            getString(row[7]) + "\t" +
-                            row[8] + "\t" +
-                            row[9] + "\t" +
-                            row[10] + "\t" +
-                            getString(row[11]) + "\t" +
-                            getString(row[12]) + "\t" +
-                            row[13] + "\t" +
-                            row[14] + "\t" +
-                            ("2".equals(row[15]) ? "t" : "f") + "\t" +
-                            row[23] + "\t" +
-                            row[28] + "\t" +
-                            idSrts[0]++ + "\t" +
-                            getMd5(row[5] + row[6] + row[7] + row[8] + row[9] + row[10] + row[11] + row[12] + row[13] + row[14] + row[15] + row[23] + row[28]) + "\t" +
-                            getMd5(row[6] + row[5] + row[7] + row[8]) + "\t" +
-                            getMd5(row[1] + row[0]) + "\n";
+                            row[6] + "\t" +
+                            row[7].replaceFirst("\\.0", "") + "\t" +
+                            row[8].replaceFirst("\\.0", "") + "\t" +
+                            row[0] + "\t" +
+                            idTrust[0]++ + "\t" +
+                            getMd5(row[4] + row[3] + row[5] + row[6]) + "\n";
                 }
             };
         }
 
-        final int[] idTrust = {1};
-        new FileLoader(new File(org.getLoadFilePath() + File.separator + "trust.dbf"), "Cp866", 9,
-                "COPY trust_temp(trustdate, regdate, firstname, lastname, " +
-                        "middlename, birthday, trusttype, period, grnz, trust_id, od_lessmd5) FROM "
-                ){
-            @Override
-            public String createRecordLine(String[] row){
-                return "" +
-                    row[1] + "\t" +
-                    row[2] + "\t" +
-                    getString(row[4]) + "\t" +
-                    getString(row[3]) + "\t" +
-                    getString(row[5]) + "\t" +
-                    row[6] + "\t" +
-                    row[7].replaceFirst("\\.0", "") + "\t" +
-                    row[8].replaceFirst("\\.0", "") + "\t" +
-                    row[0] + "\t" +
-                    idTrust[0]++ + "\t" +
-                    getMd5(row[4] + row[3] + row[5] + row[6]) + "\n";
-            }
-        };
+        if (Files.exists(Paths.get(org.getLoadFilePath() + File.separator + "ugon.dbf"))) {
+            final int[] idUgon = {1};
+            new FileLoader(new File(org.getLoadFilePath() + File.separator + "ugon.dbf"), "Cp866", 6,
+                    "COPY ugon_temp(initiator, srts, grnz, model, year, color_id, ugon_id, sg_md5) FROM "
+            ) {
+                @Override
+                public String createRecordLine(String[] row) {
+                    return "" +
+                            getString(row[5]) + "\t" +
+                            row[0] + "\t" +
+                            row[1] + "\t" +
+                            row[2] + "\t" +
+                            row[3] + "\t" +
+                            row[4] + "\t" +
+                            idUgon[0]++ + "\t" +
+                            getMd5(row[0] + row[1]) + "\n";
+                }
+            };
+        }
 
-        final int[] idUgon = {1};
-        new FileLoader(new File(org.getLoadFilePath() + File.separator + "ugon.dbf"), "Cp866", 6,
-                "COPY ugon_temp(initiator, srts, grnz, model, year, color_id, ugon_id, sg_md5) FROM "
-                ) {
-            @Override
-            public String createRecordLine(String[] row){
-                return "" +
-                    getString(row[5]) + "\t" +
-                    row[0] + "\t" +
-                    row[1] + "\t" +
-                    row[2] + "\t" +
-                    row[3] + "\t" +
-                    row[4] + "\t" +
-                    idUgon[0]++ + "\t" +
-                    getMd5(row[0] + row[1]) + "\n";
-            }
-        };
-
-        final int[] idVu = {1};
-        new FileLoader(new File(org.getLoadFilePath() + File.separator + "vu.dbf"), "Cp866", 13,
-                "COPY vu_temp(vu_date, serial, vu_number, " +
-                        "category_a, category_b, category_c, category_d, category_e, " +
-                        "firstname, lastname, middlename, birthday, city_id, vu_id, od_lessmd5) FROM "
-        ) {
-            @Override
-            public String createRecordLine(String[] row){
-                return "" +
-                    row[5] + "\t" +
-                    row[6] + "\t" +
-                    row[7] + "\t" +
-                    ("1.0".equals(row[8]) ? "t" : "f") + "\t" +
-                    ("1.0".equals(row[9]) ? "t" : "f") + "\t" +
-                    ("1.0".equals(row[10]) ? "t" : "f") + "\t" +
-                    ("1.0".equals(row[11]) ? "t" : "f") + "\t" +
-                    ("1.0".equals(row[12]) ? "t" : "f") + "\t" +
-                    getString(row[1]) + "\t" +
-                    getString(row[0]) + "\t" +
-                    getString(row[2]) + "\t" +
-                    row[3] + "\t" +
-                    row[4] + "\t" +
-                    idVu[0]++ + "\t" +
-                    getMd5(row[1] + row[0] + row[2] + row[3]) + "\n";
-            }
-        };
+        if (Files.exists(Paths.get(org.getLoadFilePath() + File.separator + "vu.dbf"))) {
+            final int[] idVu = {1};
+            new FileLoader(new File(org.getLoadFilePath() + File.separator + "vu.dbf"), "Cp866", 13,
+                    "COPY vu_temp(vu_date, serial, vu_number, " +
+                            "category_a, category_b, category_c, category_d, category_e, " +
+                            "firstname, lastname, middlename, birthday, city_id, vu_id, od_lessmd5) FROM "
+            ) {
+                @Override
+                public String createRecordLine(String[] row) {
+                    return "" +
+                            row[5] + "\t" +
+                            row[6] + "\t" +
+                            row[7] + "\t" +
+                            ("1.0".equals(row[8]) ? "t" : "f") + "\t" +
+                            ("1.0".equals(row[9]) ? "t" : "f") + "\t" +
+                            ("1.0".equals(row[10]) ? "t" : "f") + "\t" +
+                            ("1.0".equals(row[11]) ? "t" : "f") + "\t" +
+                            ("1.0".equals(row[12]) ? "t" : "f") + "\t" +
+                            getString(row[1]) + "\t" +
+                            getString(row[0]) + "\t" +
+                            getString(row[2]) + "\t" +
+                            row[3] + "\t" +
+                            row[4] + "\t" +
+                            idVu[0]++ + "\t" +
+                            getMd5(row[1] + row[0] + row[2] + row[3]) + "\n";
+                }
+            };
+        }
 
         regularizeTables(isHdbkProcessed);
     }
@@ -347,7 +359,7 @@ public class Udp extends AbstractDaemon{
 
     private abstract class FileLoader{
 
-        private final int MAX_ROW_TO_COMMIT = 100000;
+        private final int MAX_ROW_TO_COMMIT = 100_000;
 
         public FileLoader(File file, String fileCharset, int colCount, String columnList){
             log.info("Reading file " + file.getName());
@@ -362,9 +374,8 @@ public class Udp extends AbstractDaemon{
 
                 try {
                     double rCount = ((double)(file.length() - in.getHeaderLength() - 1)) / (double)in.getRecordLength();
-                    rowCount = Math.round((float)rCount);
-                   /* if(colCount != in.getFieldCount() || rCount < 0 || rCount != (double)(rowCount = Math.round((float)rCount)))
-                        throw new Exception("Invalid record count : " + rCount + " ; field count : " + in.getFieldCount());*/
+                    if(colCount != in.getFieldCount() || rCount < 0 || rCount != (double)(rowCount = Math.round((float)rCount)))
+                        throw new Exception("Invalid record count : " + rCount + " ; field count : " + in.getFieldCount());
 
                 } catch(Exception e) {
                     log.error("File " +file.getName() + " is corrupded!", e);

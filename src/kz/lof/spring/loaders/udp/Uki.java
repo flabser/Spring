@@ -1,6 +1,6 @@
 package kz.lof.spring.loaders.udp;
 
-import com.linuxense.javadbf.DBFReader;
+import kz.lof.dbf.DBFReader;
 import kz.lof.scheduler.AbstractDaemon;
 import kz.lof.webservices.Utils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;

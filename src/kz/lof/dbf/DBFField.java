@@ -1,4 +1,4 @@
-package com.linuxense.javadbf;
+package kz.lof.dbf;
 
 import java.io.DataInput;
 import java.io.DataOutput;

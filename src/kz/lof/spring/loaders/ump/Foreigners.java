@@ -1,12 +1,19 @@
 package kz.lof.spring.loaders.ump;
 
-import java.io.*;
-
+import kz.lof.constants.OrgType;
+import kz.lof.webservices.Utils;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,30 +25,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import kz.lof.constants.OrgType;
-import kz.lof.log.Log4jLogger;
-import kz.lof.webservices.Utils;
-
 
 
 public class Foreigners{
     
   static String missingValues = null;
   static Connection con = null;
-  private static kz.lof.log.Logger logger;
-  
-  
-  
+  private static Logger log;
+
   public static void loadFilesToForeigners(String dirName)  {
       
-      SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyHHmmss");
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd.HH_mm");
       
       PatternLayout layout = new PatternLayout();
       String conversionPattern = "%-7p %d [%t] %c %x - %m%n";
       layout.setConversionPattern(conversionPattern);
 
       FileAppender fileAppender = new FileAppender();
-      fileAppender.setFile("logs" + File.separator + "frns" + File.separator + "Frns"+dateFormat.format(new Date())+".log");
+      fileAppender.setFile("logs" + File.separator + "frns" + File.separator + "Foreigners_" + dateFormat.format(new Date()) + ".log");
       fileAppender.setLayout(layout);
       fileAppender.activateOptions();
 
@@ -49,42 +50,38 @@ public class Foreigners{
       rootLogger.setLevel(Level.DEBUG);
       rootLogger.addAppender(fileAppender);
 
-      logger = new Log4jLogger("");
-      
-      con = Utils.getConnection(OrgType.FRNS);
-      
-      logger.normalLogEntry("Старт загрузки файлов в базу Foreigners...");
+      log = Logger.getLogger(Foreigners.class);
+
+      log.info("Старт загрузки файлов в базу Foreigners...");
       try{
-    	  loadVidDoc(dirName + File.separator + "txt");
-    	  loadRegion(dirName + File.separator + "txt");
-    	  loadNac(dirName + File.separator + "txt");
-    	  loadCountries(dirName + File.separator + "txt");
-    	  loadCeli(dirName + File.separator + "txt");
-          loadStreet(dirName + File.separator + "txt");
-          loadLica(dirName + File.separator + "txt");
-          loadJivem(dirName + File.separator + "txt");
+    	  loadVidDoc(dirName);
+    	  loadRegion(dirName);
+    	  loadNac(dirName);
+    	  loadCountries(dirName);
+    	  loadCeli(dirName);
+          loadStreet(dirName);
+          loadLica(dirName);
+          loadJivem(dirName);
       }catch(Exception e){
-          logger.errorLogEntry(e);
+          log.error(e, e);
       }
-      logger.normalLogEntry("Загрузка файлов завершена");
+      log.info("Загрузка файлов завершена");
       rootLogger.removeAppender(fileAppender);
-      logger = null;
+      log = null;
       Utils.returnConnection(con, OrgType.FRNS);
   }
   
   static void loadCeli(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла celi.unl");
+      log.info("Загрузка файла celi.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
       try {
           in = new BufferedReader(new InputStreamReader(new FileInputStream(dataPath + File.separator + "celi.unl"), "KOI8-R"));
-      } catch (UnsupportedEncodingException e1) {
-          e1.printStackTrace();
-      } catch (FileNotFoundException e1) {
-          e1.printStackTrace();
+      } catch (UnsupportedEncodingException | FileNotFoundException e) {
+          log.error(e, e);
       }
-      
+
       List<String> colData = new ArrayList <String>();
       
       String str = "";
@@ -107,7 +104,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -137,7 +134,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -146,11 +143,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл celi.unl загружен");
+      log.info("Файл celi.unl загружен");
   }
   
   static void loadCountries(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла countries.unl");
+      log.info("Загрузка файла countries.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -184,7 +181,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -220,7 +217,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -229,11 +226,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл countries.unl загружен");
+      log.info("Файл countries.unl загружен");
   }
   
   static void loadNac(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла nac.unl");
+      log.info("Загрузка файла nac.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -267,7 +264,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -303,7 +300,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -312,11 +309,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл nac.unl загружен");
+      log.info("Файл nac.unl загружен");
   }
   
   static void loadRegion(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла region.unl");
+      log.info("Загрузка файла region.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -350,7 +347,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -380,7 +377,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -389,11 +386,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл region.unl загружен");
+      log.info("Файл region.unl загружен");
   }
-  
+
   static void loadVidDoc(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла viddoc.unl");
+      log.info("Загрузка файла viddoc.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -427,7 +424,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -455,7 +452,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -464,11 +461,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл viddoc.unl загружен");
+      log.info("Файл viddoc.unl загружен");
   }
   
   static void loadJivem(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла jivem.unl");
+      log.info("Загрузка файла jivem.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -526,7 +523,7 @@ public class Foreigners{
             	  StringTokenizer token = new StringTokenizer(str.replace("\t", "\t "), "\t\r\n", false);
                   
                   if(token.countTokens() < 32 || token.countTokens() > 33){
-                	  logger.errorLogEntry("Ошибочная строка содержит " + token.countTokens() + " колонок \n" + str);
+                	  log.error("Ошибочная строка содержит " + token.countTokens() + " колонок \n" + str);
                 	  continue;
                   }
                   
@@ -542,7 +539,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               }else{ continue;}
@@ -651,10 +648,10 @@ public class Foreigners{
 	              try{
 	                  stmt.executeUpdate(query);
 	              }catch (Exception e) {
-	                  logger.errorLogEntry(e);
+	                  log.error(e);
 	              }
               }catch(Exception e){
-            	  logger.errorLogEntry(e);
+            	  log.error(e);
               }
                       
           }
@@ -664,11 +661,11 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл jivem.unl загружен");
+      log.info("Файл jivem.unl загружен");
   }
   
   static void loadLica(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла lica.unl");
+      log.info("Загрузка файла lica.unl");
       Statement stmt = con.createStatement();
       
       BufferedReader in = null;
@@ -723,7 +720,7 @@ public class Foreigners{
                           }
                       }
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               
@@ -789,7 +786,7 @@ public class Foreigners{
                   try{
                       stmt.executeUpdate(query);
                   }catch (Exception e) {
-                      logger.errorLogEntry(e);
+                      log.error(e);
                   }
           }
           in.close();
@@ -798,17 +795,17 @@ public class Foreigners{
       }
       
       stmt.close();
-      logger.normalLogEntry("Файл lica.unl загружен");
+      log.info("Файл lica.unl загружен");
   }
   
   static void loadStreet(String dataPath) throws Exception{
-      logger.normalLogEntry("Загрузка файла street.unl");
+      log.info("Загрузка файла street.unl");
       Statement stmt = con.createStatement();
       
       List<List<String>> sTableInsert = new ArrayList<List<String>>();
       dataFile(dataPath + File.separator + "street.unl", sTableInsert, 4);
       
-      logger.normalLogEntry("Количество записей = " + sTableInsert.size());
+      log.info("Количество записей = " + sTableInsert.size());
       
       String query = "";
       for (int i = 0; i < sTableInsert.size(); i++) {
@@ -833,11 +830,11 @@ public class Foreigners{
           try{
               stmt.executeUpdate(query);
           }catch (Exception e) {
-              logger.errorLogEntry(e);
+              log.error(e);
           }
       }
       stmt.close();
-      logger.normalLogEntry("Файл street.unl загружен");
+      log.info("Файл street.unl загружен");
   }
   
   static String mOrF(String text){
@@ -910,7 +907,7 @@ public class Foreigners{
                       }
                       sStatesInsert.add(colData);
                   }catch (Exception e) {
-                      logger.errorLogEntry("Данные не соответствуют формату: " + str);
+                      log.error("Данные не соответствуют формату: " + str);
                       continue;
                   }
               }

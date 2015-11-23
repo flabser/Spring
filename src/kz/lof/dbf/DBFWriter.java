@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.linuxense.javadbf;
+package kz.lof.dbf;
 
 import java.io.*;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class DBFWriter{
         this.header = new DBFHeader();
     }
 
-    public DBFWriter(File dbfFile) throws DBFException {
+    public DBFWriter(File dbfFile) throws kz.lof.dbf.DBFException {
         try {
             this.raf = new RandomAccessFile(dbfFile, "rw");
             if(!dbfFile.exists() || dbfFile.length() == 0L) {
@@ -34,9 +34,9 @@ public class DBFWriter{
             this.header.read(this.raf);
             this.raf.seek(this.raf.length() - 1L);
         } catch (FileNotFoundException var4) {
-            throw new DBFException("Specified file is not found. " + var4.getMessage());
+            throw new kz.lof.dbf.DBFException("Specified file is not found. " + var4.getMessage());
         } catch (IOException var5) {
-            throw new DBFException(var5.getMessage() + " while reading header");
+            throw new kz.lof.dbf.DBFException(var5.getMessage() + " while reading header");
         }
 
         this.recordCount = this.header.numberOfRecords;
@@ -46,13 +46,13 @@ public class DBFWriter{
         this.characterSetName = characterSetName;
     }
 
-    public void setFields(DBFField[] fields) throws DBFException {
+    public void setFields(kz.lof.dbf.DBFField[] fields) throws kz.lof.dbf.DBFException {
         if(this.header.fieldArray != null) {
-            throw new DBFException("Fields has already been set");
+            throw new kz.lof.dbf.DBFException("Fields has already been set");
         } else if(fields != null && fields.length != 0) {
             for(int i = 0; i < fields.length; ++i) {
                 if(fields[i] == null) {
-                    throw new DBFException("Field " + (i + 1) + " is null");
+                    throw new kz.lof.dbf.DBFException("Field " + (i + 1) + " is null");
                 }
             }
 
@@ -64,32 +64,32 @@ public class DBFWriter{
                 }
 
             } catch (IOException var4) {
-                throw new DBFException("Error accesing file");
+                throw new kz.lof.dbf.DBFException("Error accesing file");
             }
         } else {
-            throw new DBFException("Should have at least one field");
+            throw new kz.lof.dbf.DBFException("Should have at least one field");
         }
     }
 
-    public void addRecord(Object[] values) throws DBFException {
+    public void addRecord(Object[] values) throws kz.lof.dbf.DBFException {
         if(this.header.fieldArray == null) {
-            throw new DBFException("Fields should be set before adding records");
+            throw new kz.lof.dbf.DBFException("Fields should be set before adding records");
         } else if(values == null) {
-            throw new DBFException("Null cannot be added as row");
+            throw new kz.lof.dbf.DBFException("Null cannot be added as row");
         } else if(values.length != this.header.fieldArray.length) {
-            throw new DBFException("Invalid record. Invalid number of fields in row");
+            throw new kz.lof.dbf.DBFException("Invalid record. Invalid number of fields in row");
         } else {
             for(int i = 0; i < this.header.fieldArray.length; ++i) {
                 if(values[i] != null) {
                     switch(this.header.fieldArray[i].getDataType()) {
                         case 67:
                             if(!(values[i] instanceof String)) {
-                                throw new DBFException("Invalid value for field " + i);
+                                throw new kz.lof.dbf.DBFException("Invalid value for field " + i);
                             }
                             break;
                         case 68:
                             if(!(values[i] instanceof Date)) {
-                                throw new DBFException("Invalid value for field " + i);
+                                throw new kz.lof.dbf.DBFException("Invalid value for field " + i);
                             }
                         case 69:
                         case 71:
@@ -102,17 +102,17 @@ public class DBFWriter{
                             break;
                         case 70:
                             if(!(values[i] instanceof Double)) {
-                                throw new DBFException("Invalid value for field " + i);
+                                throw new kz.lof.dbf.DBFException("Invalid value for field " + i);
                             }
                             break;
                         case 76:
                             if(!(values[i] instanceof Boolean)) {
-                                throw new DBFException("Invalid value for field " + i);
+                                throw new kz.lof.dbf.DBFException("Invalid value for field " + i);
                             }
                             break;
                         case 78:
                             if(!(values[i] instanceof Double)) {
-                                throw new DBFException("Invalid value for field " + i);
+                                throw new kz.lof.dbf.DBFException("Invalid value for field " + i);
                             }
                     }
                 }
@@ -125,14 +125,14 @@ public class DBFWriter{
                     this.writeRecord(this.raf, values);
                     ++this.recordCount;
                 } catch (IOException var4) {
-                    throw new DBFException("Error occured while writing record. " + var4.getMessage());
+                    throw new kz.lof.dbf.DBFException("Error occured while writing record. " + var4.getMessage());
                 }
             }
 
         }
     }
 
-    public void write(OutputStream out) throws DBFException {
+    public void write(OutputStream out) throws kz.lof.dbf.DBFException {
         try {
             if(this.raf == null) {
                 DataOutputStream e = new DataOutputStream(out);
@@ -157,11 +157,11 @@ public class DBFWriter{
             }
 
         } catch (IOException var6) {
-            throw new DBFException(var6.getMessage());
+            throw new kz.lof.dbf.DBFException(var6.getMessage());
         }
     }
 
-    public void write() throws DBFException {
+    public void write() throws kz.lof.dbf.DBFException {
         this.write((OutputStream)null);
     }
 
@@ -197,7 +197,7 @@ public class DBFWriter{
                 case 74:
                 case 75:
                 default:
-                    throw new DBFException("Unknown field type " + this.header.fieldArray[j].getDataType());
+                    throw new kz.lof.dbf.DBFException("Unknown field type " + this.header.fieldArray[j].getDataType());
                 case 70:
                     if(objectArray[j] != null) {
                         dataOutput.write(Utils.doubleFormating((Double)objectArray[j], this.characterSetName, this.header.fieldArray[j].getFieldLength(), this.header.fieldArray[j].getDecimalCount()));

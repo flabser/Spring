@@ -1,16 +1,16 @@
 package kz.lof.dataengine;
 
-import java.sql.*;  
-import java.util.NoSuchElementException;
-import java.util.Properties;
-
 import kz.lof.server.Server;
-
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.NoSuchElementException;
+import java.util.Properties;
 
 public class DBConnectionPool  implements IDBConnectionPool {
 	protected GenericObjectPool connectionPool;	
@@ -19,16 +19,16 @@ public class DBConnectionPool  implements IDBConnectionPool {
 	private String dbURL;
 
 	public void initConnectionPool(String driver, String dbURL, String userName, String password) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		Properties props = null;
+
 		this.dbURL = dbURL;
 		Class.forName(driver).newInstance();
 		connectionPool = new GenericObjectPool(null);
 		connectionPool.setTestOnBorrow(true);
 		connectionPool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
-		connectionPool.setMaxWait(15000);
+		connectionPool.setMaxWait(5000);
 		connectionPool.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
 
-		props = new Properties();
+        Properties props = new Properties();
 		props.setProperty("user", userName);
 		props.setProperty("password", password);
 		props.setProperty("accessToUnderlyingConnectionAllowed", "true");

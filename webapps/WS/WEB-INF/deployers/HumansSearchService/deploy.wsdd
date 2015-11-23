@@ -10,7 +10,7 @@
 		<parameter name="className" value="kz.lof.webservices.ump.HumansSearchService" />
 		<parameter name="wsdlTargetNamespace" value="http://ump.webservices.lof.kz" />
 		<parameter name="allowedMethods" value="getProzhivByCodeRegion getCountCriminalsByAdr getCountCriminalsByCodeRegion getLog getAllCountries getAllDistricts getAllStreets getCitizenByIIN getCountry getDistricts getFullData getHumanByAddr getHumanByDoc getHumanByFIO getStreets 
-		getNationalityByAddr getProzhivByAddr getCntAdamByAge getInfoMigrationByAdr getInfoMigrationByCodeRegion getInfoMigrationNationByAdr getInfoMigrationNationByCodeRegion getInfoMigrationReasonByAdr  getInfoMigrationReasonByCodeRegion getFlats
+		getNationalityByAddr getProzhivByAddr getCntAdamByAge getInfoMigrationByAdr getInfoMigrationByCodeRegion getInfoMigrationNationByAdr getInfoMigrationNationByCodeRegion getInfoMigrationReasonByAdr  getInfoMigrationReasonByCodeRegion getFlats getFlatParts
 		getMigrationSpecByAdr getMigrationSpecByCodeRegion getMigrationNatSpecByAdr getMigrationNatSpecByCodeRegion getMigrationNatEducByAdr getMigrationNatEducByCodeRegion getCountTypeRegByAdr getCountTypeRegByCodeRegion getHouses getInfoMigrationLiveByCodeRegion testService" />
 		<operation name="getLog" qname="main:getLog" returnQName="main:getLogReturn" returnType="xsd:string">
         	<parameter qname="main:date" type="xsd:date"/>

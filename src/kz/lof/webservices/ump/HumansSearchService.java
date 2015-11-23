@@ -941,6 +941,8 @@ public class HumansSearchService {
 				rs.close();
 			}
 
+            stmt.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1033,6 +1035,7 @@ public class HumansSearchService {
 				resultList.add(h);
 				rs.close();
 			}
+            stmt.close();
 			result = new MigrationData[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {
@@ -1105,9 +1108,9 @@ public class HumansSearchService {
 				if (countMigList.size() > 0)
 					result[i].setCountMigByNat(cntArr);
 				rs.close();
-				stmt.close();
 			}
 
+            stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1178,8 +1181,8 @@ public class HumansSearchService {
 					h.setCountMigByNat(cntArr);
 				dataList.add(h);
 				rs.close();
-				stmt.close();
 			}
+            stmt.close();
 			result = new MigrationNatData[dataList.size()];
 			dataList.toArray(result);
 		} catch (Exception e) {
@@ -1249,6 +1252,7 @@ public class HumansSearchService {
 				rs.close();
 			}
 
+            stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1310,6 +1314,7 @@ public class HumansSearchService {
 				resultList.add(h);
 				rs.close();
 			}
+            stmt.close();
 			result = new MigrationReasonData[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {
@@ -1357,6 +1362,7 @@ public class HumansSearchService {
 				}
 				rs.close();
 			}
+            stmt.close();
 			result = new SpecCount[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {
@@ -1400,6 +1406,7 @@ public class HumansSearchService {
 				}
 				rs.close();
 			}
+            stmt.close();
 			result = new SpecCount[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {
@@ -1623,8 +1630,9 @@ public class HumansSearchService {
 				regTypeCountList.toArray(regTypeCount);
 				result[i].setRegTypeCount(regTypeCount);
 				rs.close();
-				stmt.close();
 			}
+
+            stmt.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1748,8 +1756,10 @@ public class HumansSearchService {
 				h.setRegTypeCount(regTypeCount);
 				resultList.add(h);
 				rs.close();
-				stmt.close();
 			}
+
+            stmt.close();
+
 			result = new TypeRegData[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {
@@ -1810,8 +1820,9 @@ public class HumansSearchService {
 				h.setCountMigByApartment(cntMig);
 				resultList.add(h);
 				rs.close();
-				stmt.close();
 			}
+
+            stmt.close();
 			result = new MigrationLiveData[resultList.size()];
 			resultList.toArray(result);
 		} catch (Exception e) {

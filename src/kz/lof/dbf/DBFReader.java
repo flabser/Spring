@@ -1,4 +1,4 @@
-package com.linuxense.javadbf;
+package kz.lof.dbf;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
@@ -14,7 +14,7 @@ public class DBFReader extends DataInputStream{
     protected String characterSetName = "8859_1";
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public DBFReader(InputStream in) throws DBFException {
+    public DBFReader(InputStream in) throws kz.lof.dbf.DBFException {
         super(in);
         this.isClosed = false;
         this.header = new DBFHeader();
@@ -28,7 +28,7 @@ public class DBFReader extends DataInputStream{
             }
 
         } catch (IOException var3) {
-            throw new DBFException(var3.getMessage());
+            throw new kz.lof.dbf.DBFException(var3.getMessage());
         }
     }
 
@@ -59,17 +59,17 @@ public class DBFReader extends DataInputStream{
         return this.header.numberOfRecords;
     }
 
-    public DBFField getField(int index) throws DBFException {
+    public kz.lof.dbf.DBFField getField(int index) throws kz.lof.dbf.DBFException {
         if(this.isClosed) {
-            throw new DBFException("Source is not open");
+            throw new kz.lof.dbf.DBFException("Source is not open");
         } else {
             return this.header.fieldArray[index];
         }
     }
 
-    public int getFieldCount() throws DBFException {
+    public int getFieldCount() throws kz.lof.dbf.DBFException {
         if(this.isClosed) {
-            throw new DBFException("Source is not open");
+            throw new kz.lof.dbf.DBFException("Source is not open");
         } else {
             return this.header.fieldArray != null?this.header.fieldArray.length:-1;
         }
@@ -78,9 +78,9 @@ public class DBFReader extends DataInputStream{
     private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public String[] nextRecord() throws DBFException {
+    public String[] nextRecord() throws kz.lof.dbf.DBFException {
         if(this.isClosed) {
-            throw new DBFException("Source is not open");
+            throw new kz.lof.dbf.DBFException("Source is not open");
         } else {
             String[] recordObjects = new String[this.header.fieldArray.length];
 
@@ -192,7 +192,7 @@ public class DBFReader extends DataInputStream{
             } catch (EOFException var12) {
                 return null;
             } catch (IOException var13) {
-                throw new DBFException(var13.getMessage());
+                throw new kz.lof.dbf.DBFException(var13.getMessage());
             }
         }
     }

@@ -100,8 +100,6 @@ public class Queries {
             "  OWNER TO postgres; ";
 
         static final String FILE_LOAD_QUERY_HEADER = "" +
-            "SET statement_timeout = 0;\n" +
-            "SET lock_timeout = 0;\n" +
             "SET client_encoding = 'UTF8';\n" +
             "SET standard_conforming_strings = on;\n" +
             "SET check_function_bodies = false;\n" +
