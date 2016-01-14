@@ -5,10 +5,10 @@ import kz.lof.dataengine.Database;
 import kz.lof.env.Environment;
 import kz.lof.log.Log4jLogger;
 import kz.lof.server.Server;
-import org.junit.Test;
+//import org.junit.Test;
 
 public class TestUdp {
-    @Test
+    //@Test
     public void testTest(){
         test();
     }
