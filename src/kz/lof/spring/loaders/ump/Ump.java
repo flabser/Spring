@@ -53,7 +53,7 @@ public class Ump extends AbstractDaemon{
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd.HH_mm");
             Path sourceFile = Paths.get(fn);
-            String targetFileName = "loaded_" + dateFormat.format(new Date()) + ".tar.gz";
+            String targetFileName = "loaded_UMP_" + dateFormat.format(new Date()) + ".tar.gz";
             Path targetFile = Paths.get(sourceFile.getParent().toString(), "processed", targetFileName);
 
             try {
