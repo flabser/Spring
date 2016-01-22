@@ -53,7 +53,8 @@ public class Nk extends AbstractDaemon{
 
         try {
             compressFiles(dataPath, loadedFilesDir);
-            if(new File(dataPath + File.separator + loadedFilesDir).list().length > 0)
+            File loadedFilesPath = new File(dataPath + File.separator + loadedFilesDir);
+            if(loadedFilesPath.exists() && loadedFilesPath.list().length > 0)
                 setLastSuccessTime(Calendar.getInstance());
             delete(new File(dataPath + File.separator + loadedFilesDir));
         } catch (Exception e) {
@@ -146,7 +147,7 @@ public class Nk extends AbstractDaemon{
         final int COL_COUNT = 27;
         String[] files = getFileNameToLoad(dataPath, "bj");
         if(files.length == 0){
-            log.error("File bj.txt not found!");
+            log.error("File bjXXXXXX.txt not found in path " + dataPath);
             return;
         }
 
@@ -242,7 +243,7 @@ public class Nk extends AbstractDaemon{
         final int COL_COUNT = 26;
         String[] files = getFileNameToLoad(dataPath, "bf");
         if(files.length == 0){
-            log.error("File bf.txt not found!");
+            log.error("File bfXXXXXX.txt not found in path " + dataPath);
             return;
         }
 
