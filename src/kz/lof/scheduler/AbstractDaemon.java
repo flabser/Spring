@@ -119,6 +119,7 @@ public abstract class AbstractDaemon implements IDaemon, Runnable {
 		try{
 			setStatus(DaemonStatusType.RUNNING);
             FileAppender fileAppender = new FileAppender();
+            fileAppender.setName("fileAppender");
             fileAppender.setFile("logs" + File.separator + org.getOrgName().toLowerCase() + File.separator + org.getOrgName() + new SimpleDateFormat("_yyyy_MM_dd.HH_mm").format(new Date())+".log");
             fileAppender.setLayout(new PatternLayout("%-7p %d [%t] %c %x - %m%n"));
             fileAppender.activateOptions();
