@@ -7,14 +7,19 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.log4j.FileAppender;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,11 +57,12 @@ public class Nk extends AbstractDaemon{
         }
 
         try {
-            compressFiles(dataPath, loadedFilesDir);
             File loadedFilesPath = new File(dataPath + File.separator + loadedFilesDir);
-            if(loadedFilesPath.exists() && loadedFilesPath.list().length > 0)
+            if(loadedFilesPath.exists() && loadedFilesPath.list().length > 0) {
+                compressFiles(dataPath, loadedFilesDir);
+                delete(loadedFilesPath);
                 setLastSuccessTime(Calendar.getInstance());
-            delete(new File(dataPath + File.separator + loadedFilesDir));
+            }
         } catch (Exception e) {
             log.error(e, e);
         }
@@ -247,13 +253,30 @@ public class Nk extends AbstractDaemon{
             return;
         }
 
+        String logFilePath = ((FileAppender) log.getAppender("fileAppender")).getFile();
+        Path errFilePath = Paths.get(Paths.get(logFilePath).getParent().getParent().toString(), "ERROR");
+
+        if(Files.notExists(errFilePath)) {
+            try {
+                Files.createDirectory(errFilePath);
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+                return;
+            }
+        }
+
         for (String file : files) {
             log.info("Loading file " + file);
             Connection conn = Utils.getConnection(orgType);
 
-            try{
-                BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UnicodeLittleUnmarked"));
-                Statement stmt = conn.createStatement();
+            try(    InputStream is = new FileInputStream(file);
+                    InputStreamReader isr = new InputStreamReader(is, "UnicodeLittleUnmarked");
+                    BufferedReader in = new BufferedReader(isr);
+                    OutputStream os = new FileOutputStream(Paths.get(errFilePath.toString(), new File(file).getName()).toString());
+                    OutputStreamWriter osw = new OutputStreamWriter(os);
+                    BufferedWriter out = new BufferedWriter(osw);
+                    Statement stmt = conn.createStatement() ){
+
                 String str;
                 int rowNumber = 0;
                 while ((str = in.readLine()) != null || (str = in.readLine()) != null){
@@ -301,14 +324,21 @@ public class Nk extends AbstractDaemon{
 
 
                             stmt.executeUpdate(query);
-                        } catch (SQLException e) {
-                            log.error("Line " + rowNumber + ". " + e.getMessage());
+                        } catch (SQLException ignored) {
+                            try{loadBjRec(data, stmt, orgType);} catch (SQLException ex) {
+                                out.write("Line " + rowNumber);
+                                out.newLine();
+                                out.write("\t" + str);
+                                out.newLine();
+                                out.write("\t" + ex.getMessage());
+                                out.newLine();
+                                log.error("Line " + rowNumber + ". " + ex.getMessage());
+                            }
                         }
                     }else{
                         log.trace("Line " + rowNumber + ". Wrong format. Column count " + data.length);
                     }
                 }
-                in.close();
             }catch (IOException | SQLException e){
                 log.error(e, e);
             }
@@ -317,6 +347,50 @@ public class Nk extends AbstractDaemon{
             log.info("File " + file + " loaded! ");
             moveLoadedFile(file, loadedFilesDir, dataPath);
         }
+    }
+
+    private void loadBjRec(String[] data, Statement stmt, OrgType orgType) throws SQLException {
+        String query = "INSERT INTO company (rnn, company, post_index, id_state, id_region, " +
+                    "id_place, id_street, house, flat, post_index_real, id_state_real, " +
+                    "id_region_real, id_place_real, id_street_real, house_real, flat_real, " +
+                    "organ_registration, number_gos_reestr, date_reg_minust, id_view_activity, " +
+                    "id_form_organisation, id_form_property, id_form_company, okpo, date_registration, " +
+                    "id_status ) values (" +
+
+                    verifyText(data[0]) + ", " +
+                    verifyText(data[1].replaceAll("'", "''")) + ", " +
+                    verifyText(data[2]) + ", " +
+
+                    getIdRec(stateMap, data[3], orgType, "s_state", "id_state", "state") + ", " +
+                    getIdRec(regionMap, data[4], orgType, "s_region", "id_region", "region") + ", " +
+                    getIdRec(placeMap, data[5], orgType, "s_place", "id_place", "place") + ", " +
+                    getIdRec(streetMap, data[6], orgType, "s_street", "id_street", "street") + ", " +
+
+                    verifyText(data[7]) + ", " +
+                    verifyText(data[8]) + ", " +
+                    verifyText(data[9]) + ", " +
+
+                    getIdRec(stateMap, data[10], orgType, "s_state", "id_state", "state") + ", " +
+                    getIdRec(regionMap, data[11], orgType, "s_region", "id_region", "region") + ", " +
+                    getIdRec(placeMap, data[12], orgType, "s_place", "id_place", "place") + ", " +
+                    getIdRec(streetMap, data[13], orgType, "s_street", "id_street", "street") + ", " +
+
+                    verifyText(data[14]) + ", " +
+                    verifyText(data[15]) + ", " +
+                    verifyText(data[16]) + ", " +
+                    verifyText(data[17]) + ", " +
+                    verifyText(data[18]) + ", " +
+
+                    getIdRec(viewActivityMap, data[19]) + ", " +
+                    getIdRec(formOrgMap, data[20], orgType, "s_form_organisation", "id_form_organisation", "name_form_org") + ", " +
+                    verifyNum(data[21]) + ", " +
+                    getIdRec(formCompanyMap, data[22], orgType, "s_form_company", "id_form_company", "name_form_company") + ", " +
+
+                    verifyText(data[23]) + ", " +
+                    verifyText(data[24]) + ", " +
+                    "null " + ")";
+
+            stmt.executeUpdate(query);
     }
 
 
@@ -336,10 +410,35 @@ public class Nk extends AbstractDaemon{
         return result.trim();
     }
 
+//    @SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
+//    private HashMap<String, String> createMap(OrgType orgType, String tableName, String idColumn, String valueColumn) {
+//        HashMap<String, String> result = new HashMap<>();
+//        Connection conn = Utils.getConnection(orgType);
+//        String sql = "" +
+//                " select " + idColumn + ", " + valueColumn +
+//                " from " + tableName +
+//                " where trim(coalesce(" + valueColumn + ", '')) <> '';";
+//        try(
+//                Statement statement = conn.createStatement();
+//                ResultSet rs = statement.executeQuery( ) ) {
+//
+//            while (rs.next()) {
+//                result.put()
+//            }
+//        } catch (SQLException e) {
+//            log.error(e.getMessage(), e);
+//        } finally {
+//            Utils.returnConnection(conn, orgType);
+//        }
+//
+//        return result;
+//    }
+
     @Deprecated
     //todo need refactoring
     private String getIdRec(HashMap<String, String> map, String name, OrgType orgType, String tableName, String idColName, String nameColName ) throws SQLException {
-        if(name.length() == 0) return "null";
+        if(name.trim().length() == 0) return "null";
+        name = name.trim().replaceAll("'", "''");
         String result;
         if((result = map.get(name)) == null){
             Connection conn = Utils.getConnection(orgType);
