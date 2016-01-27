@@ -276,6 +276,9 @@ public class Nk extends AbstractDaemon{
             return;
         }
 
+        String logFilePath = ((FileAppender) log.getAppender("fileAppender")).getFile();
+        Path errFilePath = Paths.get(Paths.get(logFilePath).getParent().getParent().toString(), "ERROR");
+
         for (String file : files) {
             log.info("Loading file " + file);
             Connection conn = Utils.getConnection(org.getOrgType());
@@ -284,6 +287,9 @@ public class Nk extends AbstractDaemon{
                     FileInputStream fis = new FileInputStream(file);
                     InputStreamReader is = new InputStreamReader(fis, "UnicodeLittleUnmarked");
                     BufferedReader in = new BufferedReader(is);
+                    OutputStream os = new FileOutputStream(Paths.get(errFilePath.toString(), new File(file).getName()).toString());
+                    OutputStreamWriter osw = new OutputStreamWriter(os);
+                    BufferedWriter out = new BufferedWriter(osw);
                     Statement stmt = conn.createStatement() ){
 
                 String str;
@@ -337,6 +343,12 @@ public class Nk extends AbstractDaemon{
 
                             stmt.executeUpdate(query);
                         } catch (SQLException e) {
+                            out.write("Line " + rowNumber);
+                            out.newLine();
+                            out.write("\t" + str);
+                            out.newLine();
+                            out.write("\t" + e.getMessage());
+                            out.newLine();
                             log.error("Line " + rowNumber + ". " + e.getMessage());
                         }
                     }else{
