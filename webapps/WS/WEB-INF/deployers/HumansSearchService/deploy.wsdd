@@ -50,6 +50,8 @@
 		<beanMapping qname="store:CountByReason" languageSpecificType="java:kz.lof.webservices.ump.store.CountByReason" />
 		<beanMapping qname="store:MigrationReasonData" languageSpecificType="java:kz.lof.webservices.ump.store.MigrationReasonData" />
 		<beanMapping qname="store:RegTypeCount" languageSpecificType="java:kz.lof.webservices.ump.store.RegTypeCount" />
+        <beanMapping qname="store:NationalityByAddr" languageSpecificType="java:kz.lof.webservices.ump.store.NationalityByAddr" />
+        <arrayMapping qname="store:NationalityByAddrArray" type="java:kz.lof.webservices.ump.store.NationalityByAddr[]" innerType="store:NationalityByAddr" />
 		<arrayMapping qname="store:RegTypeCountArray" type="java:kz.lof.webservices.ump.store.RegTypeCount[]" innerType="store:RegTypeCount" />
 		<arrayMapping qname="store:CountByReasonArray" type="java:kz.lof.webservices.ump.store.CountByReason[]" innerType="store:CountByReason" />
 		<arrayMapping qname="store:MigrationReasonDataArray" type="java:kz.lof.webservices.ump.store.MigrationReasonData[]" innerType="store:MigrationReasonData" />

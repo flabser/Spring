@@ -2,7 +2,7 @@ package kz.lof.webservices.ump.store;
 
 
 public class NatCount {
-    private Nationality nat = new Nationality();
+    private Nationality nat;
     private int count = 0;
     
     public NatCount(){}

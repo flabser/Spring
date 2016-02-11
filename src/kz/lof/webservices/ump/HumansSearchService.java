@@ -1,9 +1,43 @@
 package kz.lof.webservices.ump;
 
 import kz.lof.constants.OrgType;
+import kz.lof.constants.Service;
 import kz.lof.webservices.Utils;
 import kz.lof.webservices.common.ServiceInfo;
-import kz.lof.webservices.ump.store.*;
+import kz.lof.webservices.ump.store.Address;
+import kz.lof.webservices.ump.store.ApartmentType;
+import kz.lof.webservices.ump.store.City;
+import kz.lof.webservices.ump.store.CountByAddr;
+import kz.lof.webservices.ump.store.CountByAge;
+import kz.lof.webservices.ump.store.CountByReason;
+import kz.lof.webservices.ump.store.CountMigByApartment;
+import kz.lof.webservices.ump.store.CountMigByNat;
+import kz.lof.webservices.ump.store.Country;
+import kz.lof.webservices.ump.store.CriminalsData;
+import kz.lof.webservices.ump.store.District;
+import kz.lof.webservices.ump.store.DocType;
+import kz.lof.webservices.ump.store.Document;
+import kz.lof.webservices.ump.store.Education;
+import kz.lof.webservices.ump.store.HumanFullData;
+import kz.lof.webservices.ump.store.HumanShortData;
+import kz.lof.webservices.ump.store.HumansSearchResult;
+import kz.lof.webservices.ump.store.MigrationData;
+import kz.lof.webservices.ump.store.MigrationLiveData;
+import kz.lof.webservices.ump.store.MigrationNatData;
+import kz.lof.webservices.ump.store.MigrationReasonData;
+import kz.lof.webservices.ump.store.NatCount;
+import kz.lof.webservices.ump.store.NatEducData;
+import kz.lof.webservices.ump.store.Nationality;
+import kz.lof.webservices.ump.store.NationalityByAddr;
+import kz.lof.webservices.ump.store.RegType;
+import kz.lof.webservices.ump.store.RegTypeCount;
+import kz.lof.webservices.ump.store.Region;
+import kz.lof.webservices.ump.store.Relation;
+import kz.lof.webservices.ump.store.SpecCount;
+import kz.lof.webservices.ump.store.Street;
+import kz.lof.webservices.ump.store.TypeRegData;
+import kz.lof.webservices.ump.store.VisitPurpose;
+import kz.lof.webservices.ump.store.VisitReason;
 
 import javax.jws.WebMethod;
 import java.io.BufferedReader;
@@ -18,6 +52,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static kz.lof.constants.InfoSys.GIS;
 
 @SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
 public class HumansSearchService {
@@ -674,17 +710,27 @@ public class HumansSearchService {
 	}
 
 
-	@WebMethod
-	public NatCount[] getNationalityByAddr(Address[] address, int pageNum, int resultsOnPage, String lang) {
-		NatCount[] result = new NatCount[0];
-		ArrayList<NatCount> resultList = new ArrayList<>();
-		Connection conn = Utils.getConnection(OrgType.UMP);
-		try {
-			Statement stmt = conn.createStatement();
-			for (Address addres : address) {
 
-				if (addres.street == null || (addres.street.id == 0 && addres.street.name == null))
+	@WebMethod
+    @Service(GIS)
+	public NationalityByAddr[] getNationalityByAddr(Address[] address, int pageNum, int resultsOnPage, String lang) {
+
+		NationalityByAddr[] resultList = new NationalityByAddr[address.length];
+		Connection conn = Utils.getConnection(OrgType.UMP);
+		try (Statement stmt = conn.createStatement()){
+			for ( int i = 0; i < address.length; ++i) {
+
+                resultList[i] = new NationalityByAddr();
+                resultList[i].setAddress(address[i]);
+
+				if (address[i].street == null || (address[i].street.id == 0 && address[i].street.name == null))
 					continue;
+
+
+                resultList[i].getAddress().city = null;
+                resultList[i].getAddress().region = null;
+                resultList[i].getAddress().district = null;
+                resultList[i].getAddress().street.city = null;
 
 				String sql = "" +
 						" select n.id_nationality, n.name_nat_male, n.name_nat_female, count(*) " +
@@ -697,35 +743,24 @@ public class HumansSearchService {
 						"   on p.id_street_unique = u.id_street_unique " +
 						" left join s_nac n " +
 						"	on a.id_nationality = n.id_nationality " +
-						" where " + (addres.street.id != 0 ? "p.id_street_unique = " + addres.street.id : "u.name_street = '" + addres.street.name + "' ") +
-						(addres.house != null && addres.house.length() > 0 ? " and p.house = '" + addres.house + "' " : "") + " and w.is_actual = true " +
+						" where " + (address[i].street.id != 0 ? "p.id_street_unique = " + address[i].street.id : "u.name_street = '" + address[i].street.name + "' ") +
+						(address[i].house != null && address[i].house.length() > 0 ? " and p.house = '" + address[i].house + "' " : "") + " and w.is_actual = true " +
 						" group by n.id_nationality, n.name_nat_male, n.name_nat_female ";
 
-				ResultSet rs = stmt.executeQuery(sql);
-
-				while (rs.next()) {
-					boolean exist = false;
-					for (NatCount aResultList : resultList) {
-						if (aResultList.getNat().getIdNat() == rs.getInt(1)) {
-							exist = true;
-							aResultList.setCount(aResultList.getCount() + rs.getInt(4));
-							break;
-						}
-					}
-					if (!exist) {
-						resultList.add(new NatCount(new Nationality(rs.getInt(1), rs.getString(2), rs.getString(3)), rs.getInt(4)));
-					}
-				}
-				rs.close();
+                ArrayList<NatCount> natCounts = new ArrayList<>();
+                try(ResultSet rs = stmt.executeQuery(sql)) {
+                    while (rs.next()) {
+                        natCounts.add(new NatCount(new Nationality(rs.getInt(1), rs.getString(2), rs.getString(3)), rs.getInt(4)));
+                    }
+                }
+                resultList[i].setNatCount(natCounts.toArray(new NatCount[natCounts.size()]));
 			}
-			result = resultList.toArray(new NatCount[resultList.size()]);
-			resultList.toArray(result);
-			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		Utils.returnConnection(conn, OrgType.UMP);
-		return result;
+		} finally {
+            Utils.returnConnection(conn, OrgType.UMP);
+        }
+        return resultList;
 	}
 
 	public CountByAddr[] getProzhivByCodeRegion(Region[] region, int pageNum, int resultsOnPage, String lang) {
@@ -798,6 +833,7 @@ public class HumansSearchService {
 		return result;
 	}
 
+    @Service(GIS)
 	public CountByAddr[] getCntAdamByAge(Address[] address, int startAge, int endAge, int sex, int pageNum, int resultsOnPage, String lang) {
 		if(address == null)
 			return new CountByAddr[0];
@@ -814,6 +850,11 @@ public class HumansSearchService {
 
 				if(address[i].street == null || (address[i].street.id == 0 && address[i].street.name == null))
 					continue;
+
+                result[i].getAddress().city = null;
+                result[i].getAddress().region = null;
+                result[i].getAddress().district = null;
+                result[i].getAddress().street.city = null;
 
 				ResultSet rs = stmt.executeQuery(" select count(*) from w_live_pribyl w inner join adam a " +
 						" 	on w.id_people_unique = a.id_people_unique " +
@@ -852,12 +893,15 @@ public class HumansSearchService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+            Utils.returnConnection(conn, OrgType.UMP);
+        }
 
-		Utils.returnConnection(conn, OrgType.UMP);
 		return result;
 	}
 
+    @WebMethod
+    @Service(GIS)
 	public MigrationData[] getInfoMigrationByAdr(Address[] address,Date startDate, Date endDate,  int pageNum, int resultsOnPage, String lang) {
 
 		MigrationData[] result = new MigrationData[address.length];
@@ -1598,47 +1642,49 @@ public class HumansSearchService {
 		return result;
 	}
 
+    @Service(GIS)
 	public TypeRegData[] getCountTypeRegByAdr(Address[] address, int pageNum, int resultsOnPage, String lang) {
 		TypeRegData[] result = new TypeRegData[address.length];
 
 		Connection conn = Utils.getConnection(OrgType.UMP);
-		try {
-			Statement stmt = conn.createStatement();
+		try ( Statement stmt = conn.createStatement() ){
 			for (int i = 0; i < address.length; i++) {
 				result[i] = new TypeRegData();
-				result[i].setAddress(address[i]);
+                result[i].setAddress(address[i]);
 
 				if(address[i].street == null || (address[i].street.id == 0 && address[i].street.name == null))
 					continue;
 
-				ArrayList<RegTypeCount> regTypeCountList = new ArrayList<>();
-				ResultSet rs = stmt.executeQuery(" select tr.id_type_reg, tr.name_type_reg, count(*) " +
-						" from w_live_pribyl w " +
-						" inner join pater p " +
-						" 	    on w.id_apartment = p.id_apartment " +
-						" left join s_type_reg tr " +
-						"  	on w.sign_type_reg = tr.id_type_reg " +
-						" inner join s_uli ul " +
-						"   on p.id_street_unique = ul.id_street_unique " +
-						" where " + (address[i].street.id != 0 ? " p.id_street_unique = " + address[i].street.id : "ul.name_street = '" + address[i].street.name + "' ") +
-						(address[i].house != null && address[i].house.trim().length() > 0 ? " and p.house = '" + address[i].house.trim() + "' " : "") +
-						" and w.is_actual = true " +
-						" group by tr.id_type_reg, tr.name_type_reg");
-				while (rs.next())
-					regTypeCountList.add(new RegTypeCount(new RegType(rs.getInt(1), replaceNull(rs.getString(2))), rs.getInt(3)));
-				RegTypeCount[] regTypeCount = new RegTypeCount[regTypeCountList.size()];
-				regTypeCountList.toArray(regTypeCount);
-				result[i].setRegTypeCount(regTypeCount);
-				rs.close();
-			}
+                result[i].setAddress( new Address(null, null, null, new Street(address[i].street.id, address[i].street.name, null), address[i].house, address[i].flat));
 
-            stmt.close();
+				ArrayList<RegTypeCount> regTypeCountList = new ArrayList<>();
+                String sql = " select tr.id_type_reg, tr.name_type_reg, count(*) " +
+                        " from w_live_pribyl w " +
+                        " inner join pater p " +
+                        " 	    on w.id_apartment = p.id_apartment " +
+                        " left join s_type_reg tr " +
+                        "  	on w.sign_type_reg = tr.id_type_reg " +
+                        " inner join s_uli ul " +
+                        "   on p.id_street_unique = ul.id_street_unique " +
+                        " where " + (address[i].street.id != 0 ? " p.id_street_unique = " + address[i].street.id : "ul.name_street = '" + address[i].street.name + "' ") +
+                        (address[i].house != null && address[i].house.trim().length() > 0 ? " and p.house = '" + address[i].house.trim() + "' " : "") +
+                        " and w.is_actual = true " +
+                        " group by tr.id_type_reg, tr.name_type_reg";
+
+				try(ResultSet rs = stmt.executeQuery(sql)) {
+                    while (rs.next())
+                        regTypeCountList.add(new RegTypeCount(new RegType(rs.getInt(1), replaceNull(rs.getString(2))), rs.getInt(3)));
+
+                    result[i].setRegTypeCount(regTypeCountList.toArray(new RegTypeCount[regTypeCountList.size()]));
+                }
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		Utils.returnConnection(conn, OrgType.UMP);
-		return result;
+		} finally {
+            Utils.returnConnection(conn, OrgType.UMP);
+        }
+        return result;
 	}
 
 	public CriminalsData[] getCountCriminalsByCodeRegion(Region[] region, int idNac, int sex, int startAge, int endAge, int pageNum, int resultsOnPage, String lang ){
@@ -1726,47 +1772,48 @@ public class HumansSearchService {
 		return result;
 	}
 
+    @Service(GIS)
 	public TypeRegData[] getCountTypeRegByCodeRegion(Region[] region, int pageNum, int resultsOnPage, String lang) {
-		TypeRegData[] result = null;
-		ArrayList<TypeRegData> resultList = new ArrayList <TypeRegData>();
+
+		TypeRegData[] result = new TypeRegData[region.length];
 		Connection conn = Utils.getConnection(OrgType.UMP);
-		try {
-			Statement stmt = conn.createStatement();
+		try (Statement stmt = conn.createStatement()){
+            int i = 0;
 			for (Region aRegion : region) {
 				TypeRegData h = new TypeRegData();
-				ResultSet rs = stmt.executeQuery("select name_region from s_ray where id_region_unique = " + aRegion.id);
-				if (rs.next())
-					aRegion.name = rs.getString(1);
-				h.setAddress(new Address(aRegion, null, null, null, "", ""));
+                String sql = "select name_region from s_ray where id_region_unique = " + aRegion.id;
+				try(ResultSet rs = stmt.executeQuery(sql)) {
+                    if (rs.next())
+                        aRegion.name = rs.getString(1);
+                }
+                aRegion.country = null;
+				h.setAddress(new Address(aRegion, null, null, null, null, null));
 
-				ArrayList<RegTypeCount> regTypeCountList = new ArrayList<RegTypeCount>();
-				rs = stmt.executeQuery(" select tr.id_type_reg, tr.name_type_reg, count(*) " +
-						" from w_live_pribyl w " +
-						" inner join pater p " +
-						" 	    on w.id_apartment = p.id_apartment " +
-						" left join s_type_reg tr " +
-						"  	on w.sign_type_reg = tr.id_type_reg " +
-						" where p.id_region_unique = " + aRegion.id + " and " +
-						" w.is_actual = true " +
-						" group by tr.id_type_reg, tr.name_type_reg");
-				while (rs.next())
-					regTypeCountList.add(new RegTypeCount(new RegType(rs.getInt(1), replaceNull(rs.getString(2))), rs.getInt(3)));
-				RegTypeCount[] regTypeCount = new RegTypeCount[regTypeCountList.size()];
-				regTypeCountList.toArray(regTypeCount);
-				h.setRegTypeCount(regTypeCount);
-				resultList.add(h);
-				rs.close();
+				ArrayList<RegTypeCount> regTypeCountList = new ArrayList<>();
+                sql = " select tr.id_type_reg, tr.name_type_reg, count(*) " +
+                        " from w_live_pribyl w " +
+                        " inner join pater p " +
+                        " 	    on w.id_apartment = p.id_apartment " +
+                        " left join s_type_reg tr " +
+                        "  	on w.sign_type_reg = tr.id_type_reg " +
+                        " where p.id_region_unique = " + aRegion.id + " and " +
+                        " w.is_actual = true " +
+                        " group by tr.id_type_reg, tr.name_type_reg";
+
+				try(ResultSet rs = stmt.executeQuery(sql)) {
+                    while (rs.next())
+                        regTypeCountList.add(new RegTypeCount(new RegType(rs.getInt(1), replaceNull(rs.getString(2))), rs.getInt(3)));
+                }
+				h.setRegTypeCount(regTypeCountList.toArray(new RegTypeCount[regTypeCountList.size()]));
+				result[i++] = h;
 			}
-
-            stmt.close();
-
-			result = new TypeRegData[resultList.size()];
-			resultList.toArray(result);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		Utils.returnConnection(conn, OrgType.UMP);
-		return result;
+		} finally {
+            Utils.returnConnection(conn, OrgType.UMP);
+        }
+
+        return result;
 	}
 
 	public String[] getHouses(int idStreet, String house){
