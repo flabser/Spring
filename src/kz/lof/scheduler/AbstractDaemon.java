@@ -10,7 +10,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import java.io.File;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,6 +141,33 @@ public abstract class AbstractDaemon implements IDaemon, Runnable {
 			Server.logger.warningLogEntry("Background process " + getID() + ", has completed with error");
 			Server.logger.errorLogEntry(e);
 		}
+	}
+
+	public String[] getLog(Date date){
+		ArrayList<String> resultList = new ArrayList<>();
+
+		File dir = new File("logs" + File.separator + org.getOrgName().toLowerCase());
+		File[] listDir = dir.listFiles();
+		if (listDir != null && listDir.length != 0){
+			for (File file :listDir){
+				if (file.isDirectory())
+					continue;
+
+				if(file.getName().matches(org.getOrgName() + new SimpleDateFormat("_yyyy_MM_dd").format(date)+"\\.[0-9]{2}_[0-9]{2}\\.log")){
+					try (	Reader reader = new FileReader(file);
+							BufferedReader in = new BufferedReader(reader)){
+						String str;
+						while ((str = in.readLine()) != null){
+							resultList.add(str);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return resultList.toArray(new String[resultList.size()]);
 	}
 
 	@SuppressWarnings("MagicConstant")

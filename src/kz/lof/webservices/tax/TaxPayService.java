@@ -231,13 +231,13 @@ public TaxPayersSearchResult getDataByFIO(String lastName, String firstName, Str
         String lastNameSearch = "";
         String middleNameSearch = "";
         if (firstName.length() > 0) {
-            firstNameSearch = "UPPER(NAME) LIKE '" + firstName.trim().toUpperCase().replace('*', '%').replace('?',  '_') + "' ";
+            firstNameSearch = "UPPER(NAME) LIKE '" + firstName.trim().toUpperCase().replace('*', '%').replace('?',  '_').replaceAll("Ё", "Е") + "' ";
         }
         if (lastName.length() > 0) {
-            lastNameSearch = "UPPER(FAMILY) LIKE '" + lastName.trim().toUpperCase().replace('*', '%').replace('?',  '_') + "' ";
+            lastNameSearch = "UPPER(FAMILY) LIKE '" + lastName.trim().toUpperCase().replace('*', '%').replace('?',  '_').replaceAll("Ё", "Е") + "' ";
         }
         if (middleName.length() > 0) {
-            middleNameSearch = "UPPER(SURNAME) LIKE '" + middleName.trim().toUpperCase().replace('*', '%').replace('?',  '_') + "' ";
+            middleNameSearch = "UPPER(SURNAME) LIKE '" + middleName.trim().toUpperCase().replace('*', '%').replace('?',  '_').replaceAll("Ё", "Е") + "' ";
         }
         String countQuery = "SELECT COUNT(*) FROM PEOPLE " +
                 "WHERE ";

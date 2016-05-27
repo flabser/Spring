@@ -2,8 +2,8 @@ package kz.lof.webservices.ump.store;
 
 
 public class MigrationNatData {
-    private Address address = new Address();
-    public  CountMigByNat[] countMigByNat = {new CountMigByNat()};
+    private Address address;
+    public  CountMigByNat[] countMigByNat;
     public MigrationNatData(){};
     public MigrationNatData(Address address, CountMigByNat[] countMigByNat){
         setAddress(address);

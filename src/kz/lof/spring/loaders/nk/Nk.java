@@ -412,9 +412,9 @@ public class Nk extends AbstractDaemon{
                                     "flat_real, post_index, post_index_real, date_registration, id_status, iin) " +
                                     "values("+
                                     verifyText(data[0])+", "+
-                                    verifyText(data[1])+", "+
-                                    verifyText(data[2])+", "+
-                                    verifyText(data[3])+", "+
+                                    verifyText(data[1]).toUpperCase().replaceAll("Ё", "Е")+", "+
+                                    verifyText(data[2]).toUpperCase().replaceAll("Ё", "Е")+", "+
+                                    verifyText(data[3]).toUpperCase().replaceAll("Ё", "Е")+", "+
                                     verifyText(data[4])+", "+
                                     verifyText(data[5])+", "+
                                     verifyText(data[6])+", "+
